@@ -36,7 +36,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 @EFragment(R.layout.fragment_canteen)
-public class CanteenFragment extends BaseFragment {
+public class MenuFragment extends BaseFragment {
 
 	private List<Canteen> canteens = new ArrayList<>();
 	private CanteenAdapter adapter;

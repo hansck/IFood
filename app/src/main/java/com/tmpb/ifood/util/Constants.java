@@ -27,10 +27,9 @@ public class Constants {
 		public static String VERIFICATION_CODE = "verificationCode";
 	}
 
-	public static class News {
-		public static String NEWS = "news";
-		public static String REGISTRATION = "registration";
-		public static String KEY = "newsKey";
+	public static class Canteen {
+		public static String CANTEEN = "canteen";
+		public static String KEY = "canteenKey";
 	}
 
 	public static class Storage {

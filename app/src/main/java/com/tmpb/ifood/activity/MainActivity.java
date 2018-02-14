@@ -25,7 +25,6 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.tmpb.ifood.R;
-import com.tmpb.ifood.fragment.CanteenFragment;
 import com.tmpb.ifood.fragment.CanteenFragment_;
 import com.tmpb.ifood.util.Constants;
 import com.tmpb.ifood.util.ImageUtil;
@@ -120,6 +119,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_dashboard_drawer, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.findItem(R.id.nav_home).setVisible(false);
+		menu.findItem(R.id.nav_history_order).setVisible(false);
+		menu.findItem(R.id.nav_signin).setVisible(false);
+		menu.findItem(R.id.nav_signout).setVisible(false);
 		return true;
 	}
 
