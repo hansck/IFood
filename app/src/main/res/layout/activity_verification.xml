@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/bg_light"
+	tools:context=".activity.VerificationActivity_"
+	tools:ignore="ContentDescription">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/item_margin_normal">
+
+		<!-- Dummy layout to catch focus at first launch -->
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:focusable="true"
+			android:focusableInTouchMode="true"/>
+
+		<ImageView
+			android:id="@+id/appLogo"
+			android:layout_width="175dp"
+			android:layout_height="175dp"
+			android:layout_centerHorizontal="true"
+			android:src="@drawable/ic_default_avatar"/>
+
+		<TextView
+			android:id="@+id/joinPreview"
+			style="@style/BodyRegular"
+			android:layout_below="@id/appLogo"
+			android:layout_marginTop="@dimen/item_margin_large"
+			android:gravity="center_horizontal"
+			android:text="@string/verification_preview"/>
+
+		<LinearLayout
+			android:id="@+id/phoneContainer"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/joinPreview"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="@dimen/item_margin_small"
+			android:orientation="horizontal">
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/phoneNumberLayout"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				app:hintEnabled="false">
+
+				<android.support.design.widget.TextInputEditText
+					android:id="@+id/phoneNumber"
+					style="@style/CustomEditText"
+					android:layout_width="wrap_content"
+					android:gravity="center"
+					android:hint="@string/phone_number"
+					android:inputType="phone"
+					android:minEms="8"/>
+			</android.support.design.widget.TextInputLayout>
+
+			<ImageButton
+				android:id="@+id/btnEditPhone"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:background="@drawable/ic_edit"/>
+		</LinearLayout>
+
+		<android.support.design.widget.TextInputEditText
+			android:id="@+id/verifyCode"
+			style="@style/CustomEditText"
+			android:layout_below="@id/phoneContainer"
+			android:layout_marginTop="@dimen/item_margin_large"
+			android:gravity="center"
+			android:hint="@string/verification_code"
+			android:imeOptions="actionDone"/>
+
+		<RelativeLayout
+			android:id="@+id/buttonContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/verifyCode"
+			android:layout_marginBottom="@dimen/item_margin_normal">
+
+			<Button
+				android:id="@+id/btnVerify"
+				style="@style/CustomButton"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="@dimen/item_margin_normal"
+				android:text="@string/verify"/>
+
+			<ProgressBar
+				android:id="@+id/progressBar"
+				style="@style/ProgressBar"
+				android:layout_marginTop="@dimen/item_margin_large"
+				android:visibility="gone"/>
+		</RelativeLayout>
+
+		<TextView
+			android:id="@+id/btnResend"
+			style="@style/ClickableMedium"
+			android:layout_below="@id/buttonContainer"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="@dimen/item_margin_normal"
+			android:gravity="center"
+			android:text="@string/verification_resend"
+			android:textColor="@color/colorAccent"
+			android:textSize="@dimen/text_subheading"/>
+	</RelativeLayout>
+</ScrollView>

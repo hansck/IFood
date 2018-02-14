@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+	<android.support.v7.widget.CardView
+		android:id="@+id/card_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_gravity="center"
+		card_view:cardCornerRadius="@dimen/card_radius"
+		card_view:cardElevation="@dimen/card_elevation"
+		card_view:cardUseCompatPadding="true">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="@drawable/bg_clickable">
+
+			<ImageView
+				android:id="@+id/image"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/item_cover_height"
+				android:background="?attr/selectableItemBackgroundBorderless"
+				android:clickable="true"
+				android:focusable="true"
+				android:scaleType="fitXY"
+				tools:src="@drawable/ic_default_image"/>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/image"
+				android:orientation="vertical"
+				android:padding="@dimen/item_margin_normal">
+
+				<TextView
+					android:id="@+id/name"
+					style="@style/SubheadingMedium"
+					tools:text="Kantin Borju"/>
+
+				<TextView
+					android:id="@+id/location"
+					style="@style/BodyRegular"
+					android:layout_marginTop="@dimen/item_margin_small"
+					android:ellipsize="end"
+					android:maxLines="2"
+					tools:text="Gedung Labtek V, Lt.1"/>
+
+				<TextView
+					android:id="@+id/schedule"
+					style="@style/BodyRegular"
+					android:layout_marginTop="@dimen/item_margin_mini"
+					tools:text="10.00 - 18.00"/>
+			</LinearLayout>
+		</RelativeLayout>
+	</android.support.v7.widget.CardView>
+</LinearLayout>

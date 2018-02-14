@@ -1,0 +1,43 @@
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/content"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/bg_light"
+	tools:context=".fragment.CanteenFragment">
+
+	<android.support.v4.widget.SwipeRefreshLayout
+		android:id="@+id/swipeRefreshLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/listCanteen"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:scrollbars="vertical"/>
+	</android.support.v4.widget.SwipeRefreshLayout>
+
+	<!--<RelativeLayout-->
+	<!--android:id="@+id/noItemLayout"-->
+	<!--android:layout_width="match_parent"-->
+	<!--android:layout_height="match_parent"-->
+	<!--android:gravity="center"-->
+	<!--android:visibility="gone">-->
+
+	<!--<ImageView-->
+	<!--android:id="@+id/imgLogo"-->
+	<!--android:layout_width="wrap_content"-->
+	<!--android:layout_height="wrap_content"-->
+	<!--android:layout_centerHorizontal="true"-->
+	<!--android:src="@drawable/app_logo_separate"/>-->
+
+	<!--<TextView-->
+	<!--style="@style/SubheadingRegular"-->
+	<!--android:layout_below="@id/imgLogo"-->
+	<!--android:layout_marginTop="@dimen/item_margin_large"-->
+	<!--android:gravity="center"-->
+	<!--android:text="@string/no_news"/>-->
+	<!--</RelativeLayout>-->
+</RelativeLayout>

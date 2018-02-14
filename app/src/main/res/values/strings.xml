@@ -1,0 +1,22 @@
+<resources>
+	<string name="app_name">IFood</string>
+	<string name="default_failed">Sorry.. Something went wrong</string>
+	<string name="drawer_close">Close navigation drawer</string>
+	<string name="drawer_open">Open navigation drawer</string>
+	<string name="home">Home</string>
+	<string name="history_order">History Order</string>
+	<string name="sign_in">Sign In</string>
+	<string name="sign_out">Sign Out</string>
+	<string name="sign_in_google">Sign In with Google</string>
+	<string name="start_now">Start Now</string>
+	<string name="permission_required">Permission(s) are required to continue the action</string>
+	<string name="phone_number">Phone Number</string>
+
+	<string name="verify">Verify</string>
+	<string name="verification_code">Verification Code</string>
+	<string name="verification_failed">Verification is not correct. Please try to input again or resend code</string>
+	<string name="verification_preview">Please confirm with the verification code sent to your phone</string>
+	<string name="verification_remark">Please ensure your phone is correct.\nWe will send the verification number to your number.</string>
+	<string name="verification_resend">RESEND VERIFICATION CODE</string>
+	<string name="verification_resend_alert">Verification code has been resend</string>
+</resources>

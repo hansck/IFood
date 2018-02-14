@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="150dp"
+	android:background="@drawable/cover_header"
+	android:gravity="bottom"
+	android:padding="@dimen/activity_vertical_margin">
+
+	<RelativeLayout
+		android:id="@+id/profileContainer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/item_margin_large">
+
+		<de.hdodenhof.circleimageview.CircleImageView
+			android:id="@+id/profileImage"
+			android:layout_width="@dimen/icon_list_large"
+			android:layout_height="@dimen/icon_list_large"
+			app:civ_border_color="@color/text_light_3"
+			app:civ_border_width="1dp"
+			tools:src="@drawable/ic_default_avatar"/>
+
+		<android.support.v7.widget.AppCompatImageButton
+			android:id="@+id/btnEditProfile"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentEnd="true"
+			android:layout_alignParentRight="true"
+			android:background="@drawable/ic_edit"/>
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:id="@+id/textContainer"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_below="@id/profileContainer">
+
+		<TextView
+			android:id="@+id/fullname"
+			style="@style/SubheadingMedium"
+			android:layout_marginTop="10dp"
+			android:textColor="#5d6060"
+			tools:text="Hans Christian K."/>
+
+		<TextView
+			android:id="@+id/email"
+			style="@style/BodyRegular"
+			android:layout_below="@id/fullname"
+			android:textColor="#9bd218"
+			tools:text="hans.christian25@yahoo.com"/>
+	</RelativeLayout>
+</RelativeLayout>

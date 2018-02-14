@@ -1,0 +1,29 @@
+<resources>
+	<dimen name="activity_horizontal_margin">16dp</dimen>
+	<dimen name="activity_vertical_margin">16dp</dimen>
+
+	<dimen name="item_margin_huge">30dp</dimen>
+	<dimen name="item_margin_large">20dp</dimen>
+	<dimen name="item_margin_normal">10dp</dimen>
+	<dimen name="item_margin_small">5dp</dimen>
+	<dimen name="item_margin_mini">3dp</dimen>
+
+	<dimen name="text_title">20sp</dimen>
+	<dimen name="text_subheading">16sp</dimen>
+	<dimen name="text_body">14sp</dimen>
+	<dimen name="text_caption">12sp</dimen>
+
+	<dimen name="logo_size">130dp</dimen>
+	<dimen name="profile_pic_size">115dp</dimen>
+	<dimen name="icon_list_large">48dp</dimen>
+	<dimen name="icon_list_medium">36dp</dimen>
+	<dimen name="icon_list_small">24dp</dimen>
+
+	<dimen name="separator_height">1dp</dimen>
+	<dimen name="card_radius">0dp</dimen>
+	<dimen name="card_elevation">3dp</dimen>
+
+	<dimen name="item_cover_height">160dp</dimen>
+	<dimen name="cover_image">130dp</dimen>
+	<dimen name="thumbnail">200dp</dimen>
+</resources>

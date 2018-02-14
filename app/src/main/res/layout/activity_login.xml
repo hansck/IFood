@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_light"
+                android:padding="@dimen/activity_vertical_margin"
+                tools:context=".activity.LoginActivity">
+
+	<ImageView
+		android:id="@+id/imgLogo"
+		android:layout_width="250dp"
+		android:layout_height="250dp"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="@dimen/item_margin_large"
+		android:src="@drawable/ic_default_avatar"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/imgLogo"
+		android:layout_centerVertical="true"
+		android:layout_marginTop="@dimen/item_margin_huge"
+		android:background="@drawable/background_login_area"
+		android:orientation="vertical"
+		android:padding="4dp">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="@dimen/activity_vertical_margin"
+			android:layout_marginRight="@dimen/activity_vertical_margin"
+			android:layout_marginTop="@dimen/activity_vertical_margin">
+
+			<TextView
+				android:id="@+id/signinWith"
+				style="@style/TitleMedium"
+				android:layout_width="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_marginLeft="@dimen/item_margin_normal"
+				android:layout_marginRight="@dimen/item_margin_normal"
+				android:text="@string/start_now"
+				android:textAllCaps="true"/>
+
+			<View
+				android:id="@+id/separatorLeft"
+				android:layout_width="wrap_content"
+				android:layout_height="1dp"
+				android:layout_centerInParent="true"
+				android:layout_toLeftOf="@id/signinWith"
+				android:layout_toStartOf="@id/signinWith"
+				android:background="@color/text_dark"/>
+
+			<View
+				android:id="@+id/separatorRight"
+				android:layout_width="wrap_content"
+				android:layout_height="1dp"
+				android:layout_centerInParent="true"
+				android:layout_toEndOf="@id/signinWith"
+				android:layout_toRightOf="@id/signinWith"
+				android:background="@color/text_dark"/>
+		</RelativeLayout>
+
+		<Button
+			android:id="@+id/btnSignIn"
+			style="@style/CustomButton"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/activity_horizontal_margin"
+			android:background="@color/ic_cancel"
+			android:drawableLeft="@drawable/ic_google"
+			android:drawableStart="@drawable/ic_google"
+			android:text="@string/sign_in_google"/>
+
+		<ProgressBar
+			android:id="@+id/progressBar"
+			style="@style/ProgressBar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginBottom="8dp"
+			android:visibility="gone"/>
+	</LinearLayout>
+</RelativeLayout>
