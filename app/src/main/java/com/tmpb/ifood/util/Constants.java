@@ -58,7 +58,7 @@ public class Constants {
 
 	public static class DateFormat {
 		public static final String DATETIME = "yyyyMMddHHmmss";
-		public static final String FULL_DATE = "EEEE, d MMMM yyyy";
+		public static final String FULL_DATE = "EEE, d MMM yyyy";
 		public static final String SHORT_DATE = "d/mm/yyyy";
 	}
 }

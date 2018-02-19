@@ -39,7 +39,7 @@ public class UserManager implements GoogleApiClient.OnConnectionFailedListener {
 			.requestEmail()
 			.build();
 
-		if(googleApiClient == null) {
+		if (googleApiClient == null) {
 			googleApiClient = new GoogleApiClient.Builder(activity)
 				.enableAutoManage(activity, this)
 				.addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -94,24 +94,6 @@ public class UserManager implements GoogleApiClient.OnConnectionFailedListener {
 		editor.apply();
 	}
 
-	public void setUserRole(boolean isAdmin) {
-		SharedPreferences.Editor editor = keyStore.edit();
-		if (isAdmin) {
-			editor.putString(Constants.User.ROLE, Constants.User.ADMIN);
-		} else {
-			editor.putString(Constants.User.ROLE, Constants.User.MEMBER);
-		}
-		editor.apply();
-	}
-
-	public void setUser(User user) {
-		SharedPreferences.Editor editor = keyStore.edit();
-		editor.putString(Constants.User.KEY, user.getKey());
-		editor.putString(Constants.User.NAME, user.getName());
-		editor.putString(Constants.User.PHONE, user.getPhone());
-		editor.apply();
-	}
-
 	public void clearKeyStore() {
 		SharedPreferences.Editor editor = keyStore.edit();
 		editor.clear();
@@ -157,23 +139,6 @@ public class UserManager implements GoogleApiClient.OnConnectionFailedListener {
 	public String getVerificationCode() {
 		return keyStore.getString(Constants.User.VERIFICATION_CODE, "");
 	}
-
-	public User getUser() {
-		return new User(getUserKey(), getUserEmail(), getUserName(), getUserPhone());
-	}
-
-//	public void setNewsList(List<News> list) {
-//		String data = new Gson().toJson(list);
-//		SharedPreferences.Editor editor = keyStore.edit();
-//		editor.putString(Constants.News.NEWS, data).apply();
-//	}
-//
-//	public List<News> getNewsList() {
-//		String str = keyStore.getString(Constants.News.NEWS, "");
-//		Type type = new TypeToken<List<News>>() {
-//		}.getType();
-//		return new Gson().fromJson(str, type);
-//	}
 
 	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 		Log.e("AUTHENTICATION", "Connection Failed!");

@@ -1,8 +1,6 @@
 package com.tmpb.ifood.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -26,7 +24,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.tmpb.ifood.R;
 import com.tmpb.ifood.fragment.CanteenFragment_;
-import com.tmpb.ifood.util.Constants;
+import com.tmpb.ifood.fragment.OrderHistoryFragment_;
 import com.tmpb.ifood.util.ImageUtil;
 import com.tmpb.ifood.util.manager.UserManager;
 
@@ -36,6 +34,9 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.WindowFeature;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 @EActivity(R.layout.activity_home)
 @WindowFeature(Window.FEATURE_NO_TITLE)
@@ -56,10 +57,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 	@AfterViews
 	void initLayout() {
 		setSupportActionBar(toolbar);
-		UserManager.getInstance().initAuth(this);
-		SharedPreferences preference = getSharedPreferences(Constants.General.PREFERENCE, Context.MODE_PRIVATE);
-		UserManager.getInstance().setKeyStore(preference);
-		UserManager.getInstance().initAuth(this);
 		toggle = new ActionBarDrawerToggle(this, content, toolbar, R.string.drawer_open, R.string.drawer_close) {
 			public void onDrawerClosed(View v) {
 			}
@@ -80,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 			public void onBackStackChanged() {
 				int nStack = fm.getBackStackEntryCount();
 				if (nStack == 0) {
-					setHeader();
+					setHeaderDrawer();
 					setDrawerState(true);
 				} else {
 					setDrawerState(false);
@@ -89,7 +86,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 				invalidateOptionsMenu();
 			}
 		});
-		setHeader();
+		setHeaderDrawer();
 		goToCanteen();
 	}
 
@@ -97,7 +94,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 		navigationView.getMenu().getItem(0).setChecked(true);
 	}
 
-	private void setHeader() {
+	private void setHeaderDrawer() {
 		View header = navigationView.getHeaderView(0);
 		CircleImageView profileImage = (CircleImageView) header.findViewById(R.id.profileImage);
 		ImageUtil.getInstance().setImageProfile(this, UserManager.getInstance().getUserPhoto(), profileImage);
@@ -105,6 +102,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 		name.setText(UserManager.getInstance().getUserName());
 		TextView email = (TextView) header.findViewById(R.id.email);
 		email.setText(UserManager.getInstance().getUserEmail());
+
+		Menu menu = navigationView.getMenu();
+		if (UserManager.getInstance().getFirebaseUser() != null) {
+			menu.findItem(R.id.nav_signin).setVisible(false);
+			profileImage.setVisibility(GONE);
+		} else {
+			menu.findItem(R.id.nav_signout).setVisible(false);
+			profileImage.setVisibility(VISIBLE);
+		}
 	}
 
 	@Override
@@ -126,7 +132,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.findItem(R.id.nav_home).setVisible(false);
-		menu.findItem(R.id.nav_history_order).setVisible(false);
+		menu.findItem(R.id.nav_order_history).setVisible(false);
 		menu.findItem(R.id.nav_signin).setVisible(false);
 		menu.findItem(R.id.nav_signout).setVisible(false);
 		return true;
@@ -152,8 +158,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 			case R.id.nav_home:
 				goToCanteen();
 				break;
-			case R.id.nav_history_order:
-				goToHistoryOrder();
+			case R.id.nav_order_history:
+				goToOrderHistory();
+				break;
+			case R.id.nav_signin:
+				goToLogin();
 				break;
 			case R.id.nav_signout:
 				onSignOut();
@@ -171,10 +180,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 		navigateTo(fragment);
 	}
 
-	private void goToHistoryOrder() {
-		Intent intent = new Intent(this, VerificationActivity_.class);
-		startActivity(intent);
-		finish();
+	private void goToOrderHistory() {
+		OrderHistoryFragment_ fragment = new OrderHistoryFragment_();
+		navigateTo(fragment);
 	}
 
 	private void goToLogin() {
@@ -184,11 +192,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 		overridePendingTransition(R.anim.enter_left, R.anim.exit_right);
 	}
 
-	private void setLoading(boolean loading) {
-		progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
-	}
-
 	private void onSignOut() {
+		UserManager.getInstance().clearKeyStore();
 		UserManager.getInstance().getAuth().signOut();
 		Auth.GoogleSignInApi.signOut(UserManager.getInstance().getClient()).setResultCallback(
 			new ResultCallback<Status>() {

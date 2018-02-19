@@ -103,8 +103,8 @@ public class MenuFragment extends BaseFragment {
 			}
 		});
 
-		RecyclerView.LayoutManager newsLayoutManager = new LinearLayoutManager(getActivity());
-		listMenu.setLayoutManager(newsLayoutManager);
+		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+		listMenu.setLayoutManager(layoutManager);
 		listMenu.addItemDecoration(new ItemDecoration(1, Common.getInstance().dpToPx(getActivity(), 10), true));
 		listMenu.setItemAnimator(new DefaultItemAnimator());
 		adapter = new MenuAdapter(getActivity(), menus, MenuFragment.this);

@@ -1,0 +1,56 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/bg_clickable"
+	android:orientation="vertical"
+	android:padding="@dimen/item_margin_normal">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/item_margin_small"
+		android:layout_marginStart="@dimen/item_margin_small"
+		android:weightSum="1">
+
+		<TextView
+			android:id="@+id/orderId"
+			style="@style/SubheadingMedium"
+			android:layout_width="0dp"
+			android:layout_weight="0.6"
+			tools:text="#ID123456"/>
+
+		<TextView
+			android:id="@+id/status"
+			style="@style/BodyRegular"
+			android:layout_width="0dp"
+			android:layout_weight="0.4"
+			android:textColor="@color/text_white"
+			tools:text="On Process"/>
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/item_margin_small"
+		android:layout_marginStart="@dimen/item_margin_small"
+		android:layout_marginTop="@dimen/item_margin_small"
+		android:orientation="horizontal"
+		android:weightSum="1">
+
+		<TextView
+			android:id="@+id/canteen"
+			style="@style/BodyRegular"
+			android:layout_width="0dp"
+			android:layout_weight="0.6"
+			tools:text="Kantin Borju"/>
+
+		<TextView
+			android:id="@+id/date"
+			style="@style/BodyRegular"
+			android:layout_width="0dp"
+			android:layout_weight="0.4"
+			tools:text="Tue, 3 August 2018"/>
+	</LinearLayout>
+</LinearLayout>

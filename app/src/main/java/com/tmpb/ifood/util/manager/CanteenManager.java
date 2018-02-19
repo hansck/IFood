@@ -27,7 +27,16 @@ public class CanteenManager {
 		return canteens;
 	}
 
-	public void setCanteens(List<Canteen> items) {
+	public void setCanteens(List<Canteen> canteens) {
 		this.canteens = canteens;
+	}
+
+	public String getNameById(String key) {
+		for (Canteen canteen : canteens) {
+			if (canteen.getKey().equals(key)) {
+				return canteen.getName();
+			}
+		}
+		return "";
 	}
 }

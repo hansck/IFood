@@ -18,4 +18,7 @@
 	<color name="button_disable">#E6E6E6</color>
 
 	<color name="ic_cancel">#E02F2F</color>
+	<color name="ic_done">#0288D1</color>
+	<color name="ic_open">#4DB6AC</color>
+	<color name="ic_in_progress">#FEA74C</color>
 </resources>

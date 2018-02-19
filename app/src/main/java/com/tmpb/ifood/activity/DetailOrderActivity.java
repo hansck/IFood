@@ -1,12 +1,14 @@
 package com.tmpb.ifood.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -16,6 +18,7 @@ import com.tmpb.ifood.R;
 import com.tmpb.ifood.adapter.OrderItemsAdapter;
 import com.tmpb.ifood.model.object.Order;
 import com.tmpb.ifood.model.object.OrderItem;
+import com.tmpb.ifood.model.object.OrderStatus;
 import com.tmpb.ifood.util.Common;
 import com.tmpb.ifood.util.Constants;
 import com.tmpb.ifood.util.FirebaseDB;
@@ -34,6 +37,7 @@ import java.util.Random;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.tmpb.ifood.model.object.OrderStatus.OPEN;
 
 /**
  * Created by Hans CK on 19-Feb-18.
@@ -72,7 +76,7 @@ public class DetailOrderActivity extends AppCompatActivity {
 
 	@AfterViews
 	void initLayout() {
-		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		Bundle data = getIntent().getExtras();
 		if (data != null) {
 			canteenKey = data.getString(Constants.Canteen.KEY);
@@ -89,14 +93,37 @@ public class DetailOrderActivity extends AppCompatActivity {
 
 	@Click(R.id.btnOrder)
 	void onAdd() {
-		if (getData()) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(getString(R.string.dialog_add))
-				.setPositiveButton(getString(R.string.yes), addNewsListener)
-				.setNegativeButton(getString(R.string.no), addNewsListener).show();
+		if (UserManager.getInstance().getFirebaseUser() != null) {
+			if (getData()) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage(getString(R.string.dialog_add))
+					.setPositiveButton(getString(R.string.yes), addNewsListener)
+					.setNegativeButton(getString(R.string.no), addNewsListener).show();
+			} else {
+				Common.getInstance().showAlertToast(this, getString(R.string.field_empty));
+			}
 		} else {
-			Common.getInstance().showAlertToast(this, getString(R.string.field_empty));
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(getString(R.string.dialog_login))
+				.setPositiveButton(getString(R.string.dialog_continue), loginListener)
+				.setNegativeButton(getString(R.string.cancel), loginListener).show();
 		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			onBackPressed();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overridePendingTransition(R.anim.enter_left, R.anim.exit_right);
 	}
 
 	private void setView() {
@@ -131,11 +158,16 @@ public class DetailOrderActivity extends AppCompatActivity {
 		return key.toString();
 	}
 
+	private void goToLogin() {
+		Intent intent = new Intent(this, LoginActivity_.class);
+		startActivity(intent);
+	}
+
 	//region Firebase Calls
 	private void uploadContent() {
 		String menuKey = FirebaseDB.getInstance().getKey(Constants.Order.ORDER);
 		Order order = new Order(canteenKey, generateOrderId(), UserManager.getInstance().getUserEmail(), receiver,
-			deliver, notes, new Date(), 0, items);
+			deliver, notes, new Date(), OrderStatus.toInt(OPEN), items);
 		FirebaseDB.getInstance().getDbReference(Constants.Order.ORDER).child(menuKey).setValue(order);
 		setLoading(false);
 		Common.getInstance().showAlertToast(this, getString(R.string.success_add));
@@ -150,6 +182,20 @@ public class DetailOrderActivity extends AppCompatActivity {
 				case DialogInterface.BUTTON_POSITIVE:
 					setLoading(true);
 					uploadContent();
+					break;
+				case DialogInterface.BUTTON_NEGATIVE:
+					break;
+			}
+		}
+	};
+
+	DialogInterface.OnClickListener loginListener = new DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int choice) {
+			switch (choice) {
+				case DialogInterface.BUTTON_POSITIVE:
+					setLoading(true);
+					goToLogin();
 					break;
 				case DialogInterface.BUTTON_NEGATIVE:
 					break;
