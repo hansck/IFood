@@ -1,6 +1,5 @@
 package com.tmpb.ifood.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +12,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.tmpb.ifood.R;
-import com.tmpb.ifood.activity.MainActivity_;
-import com.tmpb.ifood.activity.VerificationActivity_;
 import com.tmpb.ifood.adapter.CanteenAdapter;
 import com.tmpb.ifood.model.object.Canteen;
 import com.tmpb.ifood.util.Common;
@@ -23,6 +20,7 @@ import com.tmpb.ifood.util.Constants;
 import com.tmpb.ifood.util.FirebaseDB;
 import com.tmpb.ifood.util.ItemDecoration;
 import com.tmpb.ifood.util.OnListItemSelected;
+import com.tmpb.ifood.util.manager.CanteenManager;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -40,14 +38,11 @@ public class CanteenFragment extends BaseFragment {
 
 	private List<Canteen> canteens = new ArrayList<>();
 	private CanteenAdapter adapter;
-	private boolean isFirstEnter = true;
 
 	@ViewById
 	RecyclerView listCanteen;
 	@ViewById
 	SwipeRefreshLayout swipeRefreshLayout;
-//	@ViewById
-//	RelativeLayout noItemLayout;
 
 	@AfterViews
 	void initLayout() {
@@ -61,11 +56,10 @@ public class CanteenFragment extends BaseFragment {
 		adapter = new CanteenAdapter(getActivity(), canteens, canteenListener);
 		listCanteen.setAdapter(adapter);
 
-		if (ConnectivityUtil.getInstance().isNetworkConnected() && isFirstEnter) {
+		if (ConnectivityUtil.getInstance().isNetworkConnected()) {
 			swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
 			swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 			onRefreshListener.onRefresh();
-			isFirstEnter = false;
 		}
 	}
 
@@ -84,7 +78,6 @@ public class CanteenFragment extends BaseFragment {
 		super.onResume();
 		swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
 		swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-		((MainActivity_) getActivity()).setHomeChecked();
 	}
 
 	@IgnoreWhen(IgnoreWhen.State.VIEW_DESTROYED)
@@ -103,6 +96,7 @@ public class CanteenFragment extends BaseFragment {
 				listCanteen.setVisibility(GONE);
 			}
 		}
+		CanteenManager.getInstance().setCanteens(canteens);
 		cancelRefresh();
 	}
 
@@ -137,6 +131,7 @@ public class CanteenFragment extends BaseFragment {
 		@Override
 		public void onRefresh() {
 			swipeRefreshLayout.setRefreshing(true);
+			canteens.clear();
 			loadCanteen();
 		}
 	};
@@ -144,11 +139,11 @@ public class CanteenFragment extends BaseFragment {
 	OnListItemSelected canteenListener = new OnListItemSelected() {
 		@Override
 		public void onClick(int position) {
-			Intent intent = new Intent(getActivity(), VerificationActivity_.class);
+			MenuFragment_ fragment = new MenuFragment_();
 			Bundle bundle = new Bundle();
 			bundle.putParcelable(Constants.Canteen.CANTEEN, canteens.get(position));
-			intent.putExtras(bundle);
-			startActivity(intent);
+			fragment.setArguments(bundle);
+			navigateFragment(R.id.contentFrame, fragment);
 		}
 	};
 	//endregion

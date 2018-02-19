@@ -28,8 +28,24 @@ public class Constants {
 	}
 
 	public static class Canteen {
-		public static String CANTEEN = "canteen";
 		public static String KEY = "canteenKey";
+		public static String CANTEEN = "canteen";
+		public static String NAME = "name";
+		public static String LOCATION = "location";
+		public static String SCHEDULE = "schedule";
+		public static String ACCOUNT = "account";
+		public static String PICTURE = "picture";
+	}
+
+	public static class Menu {
+		public static String KEY = "menuKey";
+		public static String CANTEEN_KEY = "canteenKey";
+		public static String MENU = "menu";
+	}
+
+	public static class Order {
+		public static String KEY = "orderKey";
+		public static String ORDER = "order";
 	}
 
 	public static class Storage {

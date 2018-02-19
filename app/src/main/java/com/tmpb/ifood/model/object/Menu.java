@@ -12,12 +12,24 @@ public class Menu implements Parcelable {
 	private String key;
 	private String name;
 	private int price;
+	private String canteenKey;
 	private String picture;
 
-	public Menu(String key, String name, int price, String picture) {
+	public Menu() {
+
+	}
+
+	public Menu(String name, int price, String canteenKey) {
+		this.name = name;
+		this.price = price;
+		this.canteenKey = canteenKey;
+	}
+
+	public Menu(String key, String name, int price, String canteenKey, String picture) {
 		this.key = key;
 		this.name = name;
 		this.price = price;
+		this.canteenKey = canteenKey;
 		this.picture = picture;
 	}
 
@@ -43,6 +55,14 @@ public class Menu implements Parcelable {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public String getCanteenKey() {
+		return canteenKey;
+	}
+
+	public void setCanteenKey(String canteenKey) {
+		this.canteenKey = canteenKey;
 	}
 
 	public String getPicture() {
@@ -76,6 +96,7 @@ public class Menu implements Parcelable {
 		dest.writeString(key);
 		dest.writeString(name);
 		dest.writeInt(price);
+		dest.writeString(canteenKey);
 		dest.writeString(picture);
 	}
 
@@ -83,6 +104,7 @@ public class Menu implements Parcelable {
 		key = in.readString();
 		name = in.readString();
 		price = in.readInt();
+		canteenKey = in.readString();
 		picture = in.readString();
 	}
 	//endregion

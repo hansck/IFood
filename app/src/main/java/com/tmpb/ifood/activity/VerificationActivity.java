@@ -18,7 +18,7 @@ import com.tmpb.ifood.util.Common;
 import com.tmpb.ifood.util.ConnectivityUtil;
 import com.tmpb.ifood.util.Constants;
 import com.tmpb.ifood.util.FirebaseDB;
-import com.tmpb.ifood.util.UserManager;
+import com.tmpb.ifood.util.manager.UserManager;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -58,7 +58,6 @@ public class VerificationActivity extends AppCompatActivity {
 			setLoading(true);
 			setUserVerified();
 		} else {
-
 			Common.getInstance().showAlertToast(this, getString(R.string.verification_failed));
 		}
 	}
@@ -86,7 +85,7 @@ public class VerificationActivity extends AppCompatActivity {
 	}
 
 	private void goToHome() {
-		Intent intent = new Intent(this, MainActivity_.class);
+		Intent intent = new Intent(this, HomeActivity_.class);
 		startActivity(intent);
 		finish();
 		overridePendingTransition(R.anim.enter_right, R.anim.exit_left);

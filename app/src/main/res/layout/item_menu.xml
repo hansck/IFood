@@ -58,7 +58,7 @@
 						android:layout_width="@dimen/icon_list_small"
 						android:layout_height="@dimen/icon_list_small"
 						android:gravity="center"
-						tools:text="2"/>
+						android:text="0"/>
 
 					<ImageButton
 						android:id="@+id/btnPlus"

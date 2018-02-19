@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.tmpb.ifood.R;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -28,6 +29,7 @@ public class Common {
 	private static final int REQUEST_PERMISSIONS = 1;
 	private SimpleDateFormat fullFormat = new SimpleDateFormat(Constants.DateFormat.FULL_DATE);
 	private SimpleDateFormat shortFormat = new SimpleDateFormat(Constants.DateFormat.SHORT_DATE);
+	private DecimalFormat decimalFormat = new DecimalFormat("#,###");
 	private static Common instance = new Common();
 
 	public static Common getInstance() {
@@ -61,6 +63,10 @@ public class Common {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String getFormattedPrice(Context context, int price) {
+		return context.getString(R.string.price_rp, decimalFormat.format(price));
 	}
 
 	public boolean verifyPermission(int[] grantResults) {

@@ -1,29 +1,43 @@
 package com.tmpb.ifood.model.object;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Hans CK on 14-Feb-18.
  */
 
-public class Order {
+public class Order implements Parcelable {
 
 	private String key;
 	private String canteenKey;
-	private String userKey;
-	private String menuKey;
-	private String quantity;
+	private String orderId;
+	private String custEmail;
+	private String receiver;
+	private String deliverTo;
+	private String notes;
 	private Date date;
 	private int status;
+	private List<OrderItem> items = new ArrayList<>();
 
-	public Order(String key, String canteenKey, String userKey, String menuKey, String quantity, Date date, int status) {
-		this.key = key;
+	public Order() {
+
+	}
+
+	public Order(String canteenKey, String orderId, String custEmail, String receiver, String deliverTo, String notes, Date date, int status, List<OrderItem> items) {
 		this.canteenKey = canteenKey;
-		this.userKey = userKey;
-		this.menuKey = menuKey;
-		this.quantity = quantity;
+		this.orderId = orderId;
+		this.custEmail = custEmail;
+		this.receiver = receiver;
+		this.deliverTo = deliverTo;
+		this.notes = notes;
 		this.date = date;
 		this.status = status;
+		this.items = items;
 	}
 
 	public String getKey() {
@@ -42,28 +56,44 @@ public class Order {
 		this.canteenKey = canteenKey;
 	}
 
-	public String getUserKey() {
-		return userKey;
+	public String getOrderId() {
+		return orderId;
 	}
 
-	public void setUserKey(String userKey) {
-		this.userKey = userKey;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
-	public String getMenuKey() {
-		return menuKey;
+	public String getCustEmail() {
+		return custEmail;
 	}
 
-	public void setMenuKey(String menuKey) {
-		this.menuKey = menuKey;
+	public void setCustEmail(String custEmail) {
+		this.custEmail = custEmail;
 	}
 
-	public String getQuantity() {
-		return quantity;
+	public String getReceiver() {
+		return receiver;
 	}
 
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+
+	public String getDeliverTo() {
+		return deliverTo;
+	}
+
+	public void setDeliverTo(String deliverTo) {
+		this.deliverTo = deliverTo;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	public Date getDate() {
@@ -81,4 +111,57 @@ public class Order {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
+	public List<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<OrderItem> items) {
+		this.items = items;
+	}
+
+	//region Parcelable
+	public static final Creator<Order> CREATOR = new Creator<Order>() {
+		@Override
+		public Order createFromParcel(Parcel in) {
+			return new Order(in);
+		}
+
+		@Override
+		public Order[] newArray(int size) {
+			return new Order[size];
+		}
+	};
+
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(key);
+		dest.writeString(canteenKey);
+		dest.writeString(orderId);
+		dest.writeString(custEmail);
+		dest.writeString(receiver);
+		dest.writeString(deliverTo);
+		dest.writeString(notes);
+		dest.writeInt(status);
+		dest.writeTypedList(items);
+	}
+
+	protected Order(Parcel in) {
+		key = in.readString();
+		canteenKey = in.readString();
+		orderId = in.readString();
+		custEmail = in.readString();
+		receiver = in.readString();
+		deliverTo = in.readString();
+		notes = in.readString();
+		status = in.readInt();
+		items = in.createTypedArrayList(OrderItem.CREATOR);
+	}
+	//endregion
 }

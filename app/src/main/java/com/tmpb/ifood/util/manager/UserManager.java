@@ -1,4 +1,4 @@
-package com.tmpb.ifood.util;
+package com.tmpb.ifood.util.manager;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.tmpb.ifood.R;
 import com.tmpb.ifood.model.object.User;
+import com.tmpb.ifood.util.Constants;
 
 /**
  * Created by Hans CK on 14-Feb-18.

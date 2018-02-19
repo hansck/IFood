@@ -17,15 +17,9 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.tmpb.ifood.R;
 import com.tmpb.ifood.util.Common;
-import com.tmpb.ifood.util.Constants;
-import com.tmpb.ifood.util.FirebaseDB;
-import com.tmpb.ifood.util.UserManager;
+import com.tmpb.ifood.util.manager.UserManager;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -53,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 			public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 				UserManager.getInstance().setFirebaseUser(firebaseAuth.getCurrentUser());
 				if (UserManager.getInstance().getFirebaseUser() != null) {
-					checkUserStatus();
+					goToHome();
 				} else {
 					if (onCreate) {
 						onCreate = false;
@@ -123,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 	}
 
 	private void goToHome() {
-		Intent intent = new Intent(this, MainActivity_.class);
+		Intent intent = new Intent(this, HomeActivity_.class);
 		startActivity(intent);
 		finish();
 		overridePendingTransition(R.anim.enter_right, R.anim.exit_left);
@@ -138,30 +132,30 @@ public class LoginActivity extends AppCompatActivity {
 	//endregion
 
 	//region Firebase Call
-	public void checkUserStatus() {
-		if (UserManager.getInstance().getAccount() != null) {
-			String email = UserManager.getInstance().getAccount().getEmail();
-			final DatabaseReference ref = FirebaseDB.getInstance().getDbReference(Constants.User.ROLE);
-			ref.orderByChild(Constants.User.EMAIL).equalTo(email).addValueEventListener(new ValueEventListener() {
-				@Override
-				public void onDataChange(DataSnapshot dataSnapshot) {
-					boolean isAdmin = false;
-					for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-						isAdmin = true;
-					}
-					UserManager.getInstance().setUserRole(isAdmin);
-					ref.removeEventListener(this);
-					goToHome();
-				}
-
-				@Override
-				public void onCancelled(DatabaseError error) {
-					setLoading(false);
-					ref.removeEventListener(this);
-				}
-			});
-		}
-	}
+//	public void checkUserStatus() {
+//		if (UserManager.getInstance().getAccount() != null) {
+//			String email = UserManager.getInstance().getAccount().getEmail();
+//			final DatabaseReference ref = FirebaseDB.getInstance().getDbReference(Constants.User.ROLE);
+//			ref.orderByChild(Constants.User.EMAIL).equalTo(email).addValueEventListener(new ValueEventListener() {
+//				@Override
+//				public void onDataChange(DataSnapshot dataSnapshot) {
+//					boolean isAdmin = false;
+//					for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//						isAdmin = true;
+//					}
+//					UserManager.getInstance().setUserRole(isAdmin);
+//					ref.removeEventListener(this);
+//					goToHome();
+//				}
+//
+//				@Override
+//				public void onCancelled(DatabaseError error) {
+//					setLoading(false);
+//					ref.removeEventListener(this);
+//				}
+//			});
+//		}
+//	}
 
 //	public void checkUserData() {
 //		if (UserManager.getInstance().getAccount() != null) {

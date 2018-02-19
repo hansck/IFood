@@ -14,15 +14,26 @@ public class Canteen implements Parcelable {
 	private String location;
 	private String schedule;
 	private String picture;
-	private String userKey;
+	private String account;
 
-	public Canteen(String key, String name, String location, String schedule, String picture, String userKey) {
+	public Canteen() {
+
+	}
+
+	public Canteen(String name, String location, String schedule, String account) {
+		this.name = name;
+		this.location = location;
+		this.schedule = schedule;
+		this.account = account;
+	}
+
+	public Canteen(String key, String name, String location, String schedule, String picture, String account) {
 		this.key = key;
 		this.name = name;
 		this.location = location;
 		this.schedule = schedule;
 		this.picture = picture;
-		this.userKey = userKey;
+		this.account = account;
 	}
 
 	public String getKey() {
@@ -65,12 +76,12 @@ public class Canteen implements Parcelable {
 		this.picture = picture;
 	}
 
-	public String getUserKey() {
-		return userKey;
+	public String getAccount() {
+		return account;
 	}
 
-	public void setUserKey(String userKey) {
-		this.userKey = userKey;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 	//region Parcelable
@@ -98,7 +109,7 @@ public class Canteen implements Parcelable {
 		dest.writeString(location);
 		dest.writeString(schedule);
 		dest.writeString(picture);
-		dest.writeString(userKey);
+		dest.writeString(account);
 	}
 
 
@@ -108,7 +119,7 @@ public class Canteen implements Parcelable {
 		location = in.readString();
 		schedule = in.readString();
 		picture = in.readString();
-		userKey = in.readString();
+		account = in.readString();
 	}
 	//endregion
 }

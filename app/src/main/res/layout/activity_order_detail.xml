@@ -15,7 +15,6 @@
 		android:layout_weight="0.9"
 		android:background="@color/text_light_4"
 		android:orientation="vertical"
-		android:padding="@dimen/item_margin_small"
 		tools:ignore="ContentDescription">
 
 		<LinearLayout
@@ -37,11 +36,10 @@
 
 				<View
 					android:id="@+id/separator1"
-					style="@style/SeparatorLayout"
-					android:layout_marginTop="@dimen/item_margin_small"/>
+					style="@style/SeparatorLayout"/>
 
 				<android.support.v7.widget.RecyclerView
-					android:id="@+id/listCanteen"
+					android:id="@+id/listOrderItems"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="@dimen/item_margin_small"
@@ -53,7 +51,8 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/item_margin_normal"
 				android:background="@drawable/bg_clickable_bordered_normal"
-				android:orientation="vertical">
+				android:orientation="vertical"
+				android:paddingBottom="@dimen/item_margin_normal">
 
 				<TextView
 					style="@style/BodyMedium"
@@ -62,13 +61,14 @@
 
 				<View
 					android:id="@+id/separator2"
-					style="@style/SeparatorLayout"
-					android:layout_marginTop="@dimen/item_margin_small"/>
+					style="@style/SeparatorLayout"/>
 
 				<EditText
 					android:id="@+id/editReceiver"
 					style="@style/CustomEditText"
-					android:layout_marginTop="@dimen/item_margin_small"
+					android:layout_marginLeft="@dimen/item_margin_normal"
+					android:layout_marginRight="@dimen/item_margin_normal"
+					android:layout_marginTop="@dimen/item_margin_normal"
 					android:background="@drawable/background_edittext"
 					android:hint="@string/receiver_name"
 					android:inputType="text"
@@ -77,7 +77,9 @@
 				<EditText
 					android:id="@+id/editDeliver"
 					style="@style/CustomEditText"
-					android:layout_marginTop="@dimen/item_margin_small"
+					android:layout_marginLeft="@dimen/item_margin_normal"
+					android:layout_marginRight="@dimen/item_margin_normal"
+					android:layout_marginTop="@dimen/item_margin_normal"
 					android:background="@drawable/background_edittext"
 					android:gravity="start"
 					android:hint="@string/deliver_to"
@@ -88,7 +90,9 @@
 				<EditText
 					android:id="@+id/editNotes"
 					style="@style/CustomEditText"
-					android:layout_marginTop="@dimen/item_margin_small"
+					android:layout_marginLeft="@dimen/item_margin_normal"
+					android:layout_marginRight="@dimen/item_margin_normal"
+					android:layout_marginTop="@dimen/item_margin_normal"
 					android:background="@drawable/background_edittext"
 					android:gravity="left"
 					android:hint="@string/notes"
@@ -113,8 +117,7 @@
 				<View
 					android:id="@+id/separator3"
 					style="@style/SeparatorLayout"
-					android:layout_marginBottom="@dimen/item_margin_normal"
-					android:layout_marginTop="@dimen/item_margin_small"/>
+					android:layout_marginBottom="@dimen/item_margin_normal"/>
 
 				<LinearLayout
 					android:layout_width="match_parent"
@@ -127,14 +130,14 @@
 						android:id="@+id/priceText"
 						style="@style/BodyRegular"
 						android:layout_width="0dp"
-						android:layout_weight="0.8"
+						android:layout_weight="0.7"
 						android:text="@string/price"/>
 
 					<TextView
 						android:id="@+id/price"
 						style="@style/BodyMedium"
 						android:layout_width="0dp"
-						android:layout_weight="0.2"
+						android:layout_weight="0.3"
 						android:gravity="end"
 						tools:text="58.000"/>
 				</LinearLayout>
@@ -151,14 +154,14 @@
 						android:id="@+id/feeText"
 						style="@style/BodyRegular"
 						android:layout_width="0dp"
-						android:layout_weight="0.8"
+						android:layout_weight="0.7"
 						android:text="@string/delivery_fee"/>
 
 					<TextView
 						android:id="@+id/fee"
 						style="@style/BodyMedium"
 						android:layout_width="0dp"
-						android:layout_weight="0.2"
+						android:layout_weight="0.3"
 						android:gravity="end"
 						tools:text="2.000"/>
 				</LinearLayout>
@@ -180,14 +183,14 @@
 						android:id="@+id/totalText"
 						style="@style/SubheadingRegular"
 						android:layout_width="0dp"
-						android:layout_weight="0.8"
+						android:layout_weight="0.7"
 						android:text="@string/total"/>
 
 					<TextView
 						android:id="@+id/total"
 						style="@style/SubheadingMedium"
 						android:layout_width="0dp"
-						android:layout_weight="0.2"
+						android:layout_weight="0.3"
 						android:gravity="end"
 						tools:text="60.000"/>
 				</LinearLayout>
@@ -200,10 +203,11 @@
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_marginBottom="@dimen/item_margin_normal"
-		android:layout_weight="0.1">
+		android:layout_weight="0.1"
+		android:background="@color/text_light_4">
 
 		<Button
-			android:id="@+id/btnConfirm"
+			android:id="@+id/btnOrder"
 			style="@style/CustomButton"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

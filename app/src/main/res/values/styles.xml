@@ -155,4 +155,23 @@
 		<item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
 		<item name="android:layout_centerVertical">true</item>
 	</style>
+
+	<!-- Floating Edit Text -->
+	<style name="CustomEditTextLayout">
+		<item name="android:textColorHint">@color/text_light_2</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:textSize">@dimen/text_body</item>
+	</style>
+
+	<style name="CustomErrorTextAppearance" parent="@android:style/TextAppearance">
+		<item name="android:textColor">@color/ic_cancel</item>
+		<item name="android:textSize">@dimen/text_body</item>
+	</style>
+
+	<!-- Floating Button -->
+	<style name="CustomFloatingLabel" parent="@android:style/TextAppearance">
+		<item name="android:textColor">@color/colorPrimary</item>
+		<item name="android:textSize">@dimen/text_body</item>
+	</style>
 </resources>

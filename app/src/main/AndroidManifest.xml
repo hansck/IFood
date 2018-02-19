@@ -22,9 +22,13 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+		<activity android:name=".activity.HomeActivity_">
+		</activity>
 		<activity android:name=".activity.VerificationActivity_">
 		</activity>
 		<activity android:name=".activity.LoginActivity_">
+		</activity>
+		<activity android:name=".activity.DetailOrderActivity_">
 		</activity>
 	</application>
 

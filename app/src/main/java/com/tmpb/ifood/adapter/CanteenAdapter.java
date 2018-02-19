@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.tmpb.ifood.R;
 import com.tmpb.ifood.model.object.Canteen;
 import com.tmpb.ifood.util.Constants;
+import com.tmpb.ifood.util.ImageUtil;
 import com.tmpb.ifood.util.OnListItemSelected;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +27,6 @@ public class CanteenAdapter extends RecyclerView.Adapter<CanteenAdapter.CanteenV
 	private Context context;
 	private List<Canteen> list;
 	private OnListItemSelected listener;
-	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DateFormat.FULL_DATE);
 
 	public class CanteenViewHolder extends RecyclerView.ViewHolder {
 		public TextView name, location, schedule;
@@ -35,7 +35,7 @@ public class CanteenAdapter extends RecyclerView.Adapter<CanteenAdapter.CanteenV
 
 		public CanteenViewHolder(View view) {
 			super(view);
-			name = (TextView) view.findViewById(R.id.title);
+			name = (TextView) view.findViewById(R.id.name);
 			location = (TextView) view.findViewById(R.id.location);
 			schedule = (TextView) view.findViewById(R.id.schedule);
 			image = (ImageView) view.findViewById(R.id.image);
@@ -61,6 +61,7 @@ public class CanteenAdapter extends RecyclerView.Adapter<CanteenAdapter.CanteenV
 		holder.name.setText(canteen.getName());
 		holder.location.setText(canteen.getLocation());
 		holder.schedule.setText(canteen.getSchedule());
+		ImageUtil.getInstance().setImageResource(context, canteen.getPicture(), holder.image);
 		holder.cardView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

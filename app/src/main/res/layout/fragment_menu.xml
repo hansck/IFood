@@ -15,7 +15,8 @@
 		android:layout_alignParentBottom="true"
 		android:background="@color/colorPrimaryLight"
 		android:orientation="horizontal"
-		android:padding="@dimen/item_margin_normal">
+		android:padding="@dimen/item_margin_normal"
+		android:visibility="gone">
 
 		<ImageView
 			android:layout_width="@dimen/icon_list_medium"
@@ -31,6 +32,8 @@
 			android:layout_alignParentLeft="true"
 			android:layout_alignParentStart="true"
 			android:layout_centerVertical="true"
+			android:layout_marginLeft="@dimen/item_margin_normal"
+			android:layout_marginStart="@dimen/item_margin_normal"
 			android:src="@drawable/ic_shopping_cart"/>
 
 		<LinearLayout
@@ -47,9 +50,8 @@
 				android:text="@string/estimated_price"/>
 
 			<TextView
-				android:id="@+id/price"
+				android:id="@+id/totalPrice"
 				style="@style/SubheadingMedium"
-				android:text="@string/estimated_price"
 				tools:text="Rp. 50.000,00"/>
 		</LinearLayout>
 	</RelativeLayout>
@@ -102,14 +104,18 @@
 						android:padding="@dimen/item_margin_normal">
 
 						<TextView
-							android:id="@+id/title"
+							android:id="@+id/name"
 							style="@style/TitleMedium"
+							android:layout_marginLeft="@dimen/item_margin_normal"
+							android:layout_marginStart="@dimen/item_margin_normal"
 							tools:text="Kantin Borju"/>
 
 						<LinearLayout
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:layout_below="@id/title"
+							android:layout_below="@id/name"
+							android:layout_marginLeft="@dimen/item_margin_normal"
+							android:layout_marginStart="@dimen/item_margin_normal"
 							android:weightSum="1">
 
 							<TextView
@@ -122,6 +128,7 @@
 								tools:text="Gedung Labtek V, Lt. 1"/>
 
 							<TextView
+								android:id="@+id/schedule"
 								style="@style/BodyRegular"
 								android:layout_width="0dp"
 								android:layout_weight="0.4"
@@ -139,7 +146,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="?attr/actionBarSize"
 					android:fitsSystemWindows="true"
-					app:layout_collapseMode="pin"/>
+					app:layout_collapseMode="parallax"/>
 			</android.support.design.widget.CollapsingToolbarLayout>
 		</android.support.design.widget.AppBarLayout>
 
@@ -150,7 +157,7 @@
 			app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 			<android.support.v7.widget.RecyclerView
-				android:id="@+id/listCanteen"
+				android:id="@+id/listMenu"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:scrollbars="vertical"/>
