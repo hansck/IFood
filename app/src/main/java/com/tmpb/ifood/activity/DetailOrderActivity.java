@@ -3,6 +3,7 @@ package com.tmpb.ifood.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,10 +13,16 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.tmpb.ifood.R;
 import com.tmpb.ifood.adapter.OrderItemsAdapter;
+import com.tmpb.ifood.model.object.Menu;
 import com.tmpb.ifood.model.object.Order;
 import com.tmpb.ifood.model.object.OrderItem;
 import com.tmpb.ifood.model.object.OrderStatus;
@@ -23,6 +30,7 @@ import com.tmpb.ifood.util.Common;
 import com.tmpb.ifood.util.Constants;
 import com.tmpb.ifood.util.FirebaseDB;
 import com.tmpb.ifood.util.ItemDecoration;
+import com.tmpb.ifood.util.manager.MenuManager;
 import com.tmpb.ifood.util.manager.OrderManager;
 import com.tmpb.ifood.util.manager.UserManager;
 
@@ -31,12 +39,16 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.tmpb.ifood.model.object.OrderStatus.CANCELLED;
 import static com.tmpb.ifood.model.object.OrderStatus.OPEN;
 
 /**
@@ -46,6 +58,7 @@ import static com.tmpb.ifood.model.object.OrderStatus.OPEN;
 @EActivity(R.layout.activity_order_detail)
 public class DetailOrderActivity extends AppCompatActivity {
 
+	private Order order;
 	private String canteenKey;
 	private List<OrderItem> items;
 	private OrderItemsAdapter adapter;
@@ -68,27 +81,35 @@ public class DetailOrderActivity extends AppCompatActivity {
 	@ViewById
 	TextView total;
 	@ViewById
+	TextView status;
+	@ViewById
 	Button btnOrder;
 	@ViewById
 	Button btnCancel;
 	@ViewById
 	ProgressBar progressBar;
+	@ViewById
+	RelativeLayout statusContainer;
+	@ViewById
+	RelativeLayout buttonContainer;
 
 	@AfterViews
 	void initLayout() {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		Bundle data = getIntent().getExtras();
 		if (data != null) {
-			canteenKey = data.getString(Constants.Canteen.KEY);
+			canteenKey = data.getString(Constants.Canteen.KEY, "");
+			order = data.getParcelable(Constants.Order.ORDER);
 		}
-		items = OrderManager.getInstance().getItems();
-		RecyclerView.LayoutManager newsLayoutManager = new LinearLayoutManager(this);
-		listOrderItems.setLayoutManager(newsLayoutManager);
-		listOrderItems.addItemDecoration(new ItemDecoration(1, Common.getInstance().dpToPx(this, 10), true));
-		listOrderItems.setItemAnimator(new DefaultItemAnimator());
-		adapter = new OrderItemsAdapter(this, items);
-		listOrderItems.setAdapter(adapter);
-		setView();
+		if (!canteenKey.isEmpty()) {
+			items = OrderManager.getInstance().getItems();
+			setOrderItemList();
+			setView();
+		} else {
+			items = order.getItems();
+			loadMenu();
+		}
+
 	}
 
 	@Click(R.id.btnOrder)
@@ -110,6 +131,17 @@ public class DetailOrderActivity extends AppCompatActivity {
 		}
 	}
 
+	@Click(R.id.btnCancel)
+	void onCancel() {
+		setLoading(true);
+		DatabaseReference ref = FirebaseDB.getInstance().getDbReference(Constants.Order.ORDER);
+		Map<String, Object> taskMap = new HashMap<>();
+		taskMap.put("status", OrderStatus.toInt(CANCELLED));
+		ref.child(order.getKey()).updateChildren(taskMap);
+		setLoading(false);
+		setStatus(OrderStatus.CANCELLED);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -126,12 +158,62 @@ public class DetailOrderActivity extends AppCompatActivity {
 		overridePendingTransition(R.anim.enter_left, R.anim.exit_right);
 	}
 
+	//region Private methods
+	private void setOrderItemList() {
+		RecyclerView.LayoutManager newsLayoutManager = new LinearLayoutManager(this);
+		listOrderItems.setLayoutManager(newsLayoutManager);
+		listOrderItems.addItemDecoration(new ItemDecoration(1, Common.getInstance().dpToPx(this, 10), true));
+		listOrderItems.setItemAnimator(new DefaultItemAnimator());
+		adapter = new OrderItemsAdapter(this, items, this);
+		listOrderItems.setAdapter(adapter);
+	}
+
 	private void setView() {
-		int subTotal = OrderManager.getInstance().getTotalPrice();
+		int subTotal;
+		if (!canteenKey.isEmpty()) {
+			subTotal = OrderManager.getInstance().getTotalPrice();
+		} else {
+			subTotal = calculateSubTotal();
+			editReceiver.setEnabled(false);
+			editReceiver.setText(order.getReceiver());
+			editDeliver.setEnabled(false);
+			editDeliver.setText(order.getDeliverTo());
+			editNotes.setEnabled(false);
+			editNotes.setText(order.getNotes());
+			btnOrder.setVisibility(GONE);
+			statusContainer.setVisibility(VISIBLE);
+			setStatus(OrderStatus.fromInt(order.getStatus()));
+		}
 		int deliveryFee = (int) (subTotal * 0.05);
 		price.setText(Common.getInstance().getFormattedPrice(this, subTotal));
 		fee.setText(Common.getInstance().getFormattedPrice(this, deliveryFee));
 		total.setText(Common.getInstance().getFormattedPrice(this, subTotal + deliveryFee));
+	}
+
+	private void setStatus(OrderStatus orderStatus) {
+		status.setText(getString(R.string.order_status, OrderStatus.getTitleFromStatus(orderStatus)));
+		int color = 0;
+		switch (orderStatus) {
+			case OPEN:
+				color = ContextCompat.getColor(this, R.color.ic_open);
+				break;
+			case IN_PROGRESS:
+				color = ContextCompat.getColor(this, R.color.ic_in_progress);
+				break;
+			case CANCELLED:
+				color = ContextCompat.getColor(this, R.color.ic_cancel);
+				break;
+			case COMPLETED:
+				color = ContextCompat.getColor(this, R.color.ic_done);
+				break;
+		}
+		statusContainer.setBackgroundColor(color);
+		if (orderStatus == OPEN) {
+			btnCancel.setVisibility(VISIBLE);
+		} else {
+			btnCancel.setVisibility(GONE);
+			buttonContainer.setVisibility(GONE);
+		}
 	}
 
 	private boolean getData() {
@@ -163,6 +245,21 @@ public class DetailOrderActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 
+	private int calculateSubTotal() {
+		int subTotal = 0;
+		if (MenuManager.getInstance().getMenus().size() > 0) {
+			for (Menu temp : MenuManager.getInstance().getMenus()) {
+				for (OrderItem item : items) {
+					if (temp.getKey().equals(item.getMenuKey())) {
+						subTotal += temp.getPrice() * item.getQuantity();
+					}
+				}
+			}
+		}
+		return subTotal;
+	}
+	//endregion
+
 	//region Firebase Calls
 	private void uploadContent() {
 		String menuKey = FirebaseDB.getInstance().getKey(Constants.Order.ORDER);
@@ -171,6 +268,31 @@ public class DetailOrderActivity extends AppCompatActivity {
 		FirebaseDB.getInstance().getDbReference(Constants.Order.ORDER).child(menuKey).setValue(order);
 		setLoading(false);
 		Common.getInstance().showAlertToast(this, getString(R.string.success_add));
+	}
+
+	private void loadMenu() {
+		final DatabaseReference ref = FirebaseDB.getInstance().getDbReference(Constants.Menu.MENU);
+		ref.orderByChild(Constants.Menu.CANTEEN_KEY).equalTo(order.getCanteenKey()).addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				List<Menu> menus = new ArrayList<>();
+				for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+					Menu menu = postSnapshot.getValue(Menu.class);
+					menu.setKey(postSnapshot.getKey());
+					menus.add(menu);
+				}
+				MenuManager.getInstance().setMenus(menus);
+				setOrderItemList();
+				setView();
+				ref.removeEventListener(this);
+			}
+
+			@Override
+			public void onCancelled(DatabaseError error) {
+				Common.getInstance().showAlertToast(DetailOrderActivity.this, getString(R.string.default_failed));
+				ref.removeEventListener(this);
+			}
+		});
 	}
 	//endregion
 

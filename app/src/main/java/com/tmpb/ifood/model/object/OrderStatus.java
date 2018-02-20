@@ -44,4 +44,12 @@ public enum OrderStatus {
 			return "";
 		}
 	}
+
+	public static String getTitleFromStatus(OrderStatus status) {
+		try {
+			return title[toInt(status)];
+		} catch (Exception e) {
+			return "";
+		}
+	}
 }

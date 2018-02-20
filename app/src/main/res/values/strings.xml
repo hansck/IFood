@@ -22,6 +22,7 @@
 	<string name="field_empty">All field must not be empty</string>
 	<string name="home">Home</string>
 	<string name="history_order">History Order</string>
+	<string name="in_progress">In Progress</string>
 	<string name="location">Location</string>
 	<string name="manage_canteen">Manage Canteen</string>
 	<string name="manage_menu">Manage Menu</string>
@@ -29,8 +30,8 @@
 	<string name="menu_name">Menu Name</string>
 	<string name="no">No</string>
 	<string name="notes">Notes</string>
-	<string name="on_progress">On Progress</string>
 	<string name="order">Order</string>
+	<string name="order_status">Order %1$s</string>
 	<string name="order_items">Order Items</string>
 	<string name="password">Password</string>
 	<string name="payment_details">Payment Details</string>

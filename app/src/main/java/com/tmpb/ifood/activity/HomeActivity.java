@@ -69,6 +69,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 		toggle.syncState();
 		navigationView.setNavigationItemSelectedListener(this);
 		navigationView.setItemIconTintList(null);
+//		if (UserManager.getInstance().getFirebaseUser() != null) {
+//			navigationView.getMenu().setGroupVisible(R.id.nav_signin, true);
+////			profileImage.setVisibility(GONE);
+//		} else {
+//			navigationView.getMenu().setGroupVisible(R.id.nav_signout, true);
+////			profileImage.setVisibility(VISIBLE);
+//		}
 		setHomeChecked();
 
 		fm = getSupportFragmentManager();
@@ -102,15 +109,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 		name.setText(UserManager.getInstance().getUserName());
 		TextView email = (TextView) header.findViewById(R.id.email);
 		email.setText(UserManager.getInstance().getUserEmail());
-
-		Menu menu = navigationView.getMenu();
-		if (UserManager.getInstance().getFirebaseUser() != null) {
-			menu.findItem(R.id.nav_signin).setVisible(false);
-			profileImage.setVisibility(GONE);
-		} else {
-			menu.findItem(R.id.nav_signout).setVisible(false);
-			profileImage.setVisibility(VISIBLE);
-		}
 	}
 
 	@Override
@@ -193,8 +191,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 	}
 
 	private void onSignOut() {
-		UserManager.getInstance().clearKeyStore();
-		UserManager.getInstance().getAuth().signOut();
 		Auth.GoogleSignInApi.signOut(UserManager.getInstance().getClient()).setResultCallback(
 			new ResultCallback<Status>() {
 				@Override
@@ -203,6 +199,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 					goToLogin();
 				}
 			});
+		UserManager.getInstance().clearKeyStore();
+		UserManager.getInstance().getAuth().signOut();
 	}
 
 	private void setDrawerState(boolean enable) {

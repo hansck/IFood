@@ -45,7 +45,6 @@ public class UserManager implements GoogleApiClient.OnConnectionFailedListener {
 				.addApi(Auth.GOOGLE_SIGN_IN_API, gso)
 				.build();
 		}
-
 		auth = FirebaseAuth.getInstance();
 	}
 

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tmpb.ifood.R;
+import com.tmpb.ifood.activity.DetailOrderActivity;
 import com.tmpb.ifood.model.object.Menu;
 import com.tmpb.ifood.model.object.OrderItem;
 import com.tmpb.ifood.util.Common;
@@ -28,6 +29,7 @@ public class OrderItemsAdapter extends RecyclerView.Adapter<OrderItemsAdapter.Or
 
 	private Context context;
 	private List<OrderItem> list;
+	private DetailOrderActivity activity;
 
 	public class OrderItemViewHolder extends RecyclerView.ViewHolder {
 		public TextView name, price, count;
@@ -45,9 +47,10 @@ public class OrderItemsAdapter extends RecyclerView.Adapter<OrderItemsAdapter.Or
 		}
 	}
 
-	public OrderItemsAdapter(Context context, List<OrderItem> list) {
+	public OrderItemsAdapter(Context context, List<OrderItem> list, DetailOrderActivity activity) {
 		this.context = context;
 		this.list = list;
+		this.activity = activity;
 	}
 
 	@Override
@@ -62,7 +65,9 @@ public class OrderItemsAdapter extends RecyclerView.Adapter<OrderItemsAdapter.Or
 		Menu menu = new Menu();
 		if (MenuManager.getInstance().getMenus().size() > 0) {
 			for (Menu temp : MenuManager.getInstance().getMenus()) {
-				if (temp.getKey().equals(item.getMenuKey())) menu = temp;
+				if (temp.getKey().equals(item.getMenuKey())) {
+					menu = temp;
+				}
 			}
 		}
 		holder.name.setText(menu.getName());

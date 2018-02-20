@@ -9,6 +9,7 @@ import android.text.style.BackgroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tmpb.ifood.R;
@@ -32,6 +33,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
 	public class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
 		public TextView orderId, status, canteen, date;
+		public LinearLayout content;
 
 		public OrderHistoryViewHolder(View view) {
 			super(view);
@@ -39,6 +41,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 			status = (TextView) view.findViewById(R.id.status);
 			canteen = (TextView) view.findViewById(R.id.canteen);
 			date = (TextView) view.findViewById(R.id.date);
+			content = (LinearLayout) view.findViewById(R.id.content);
 		}
 	}
 
@@ -61,6 +64,12 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 		holder.canteen.setText(CanteenManager.getInstance().getNameById(order.getCanteenKey()));
 		holder.date.setText(Common.getInstance().formatDateFull(order.getDate()));
 		setStatus(order.getStatus(), holder.status);
+		holder.content.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				listener.onClick(holder.getAdapterPosition());
+			}
+		});
 	}
 
 	private void setStatus(int status, TextView view) {

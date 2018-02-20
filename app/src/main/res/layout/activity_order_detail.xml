@@ -1,18 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/content"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/bg_light"
-              android:orientation="vertical"
-              android:weightSum="1"
-              tools:context=".fragment.CanteenFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_light"
+                android:orientation="vertical"
+                tools:context=".fragment.CanteenFragment">
+
+	<RelativeLayout
+		android:id="@+id/statusContainer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:visibility="gone">
+
+		<TextView
+			android:id="@+id/status"
+			style="@style/SubheadingMedium"
+			android:gravity="center"
+			android:padding="@dimen/item_margin_normal"
+			android:textColor="@color/text_white"
+			tools:text="IN PROGRESS"/>
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:id="@+id/buttonContainer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_marginBottom="@dimen/item_margin_normal"
+		android:background="@color/text_light_4">
+
+		<Button
+			android:id="@+id/btnInProgress"
+			style="@style/CustomButton"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:text="@string/in_progress"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/btnCompleted"
+			style="@style/CustomButton"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:text="@string/completed"
+			android:visibility="visible"/>
+
+		<ProgressBar
+			android:id="@+id/progressBar"
+			style="@style/ProgressBar"
+			android:visibility="gone"/>
+	</RelativeLayout>
 
 	<ScrollView
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="0.9"
+		android:layout_height="wrap_content"
+		android:layout_above="@id/buttonContainer"
+		android:layout_below="@id/statusContainer"
 		android:background="@color/text_light_4"
 		android:orientation="vertical"
 		tools:ignore="ContentDescription">
@@ -197,38 +244,4 @@
 			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
-
-	<RelativeLayout
-		android:id="@+id/buttonContainer"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_marginBottom="@dimen/item_margin_normal"
-		android:layout_weight="0.1"
-		android:background="@color/text_light_4">
-
-		<Button
-			android:id="@+id/btnOrder"
-			style="@style/CustomButton"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:layout_centerHorizontal="true"
-			android:text="@string/order"
-			android:visibility="visible"/>
-
-		<Button
-			android:id="@+id/btnCancel"
-			style="@style/CustomButtonRemove"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:layout_centerHorizontal="true"
-			android:text="@string/cancel"
-			android:visibility="gone"/>
-
-		<ProgressBar
-			android:id="@+id/progressBar"
-			style="@style/ProgressBar"
-			android:visibility="gone"/>
-	</RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

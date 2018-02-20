@@ -46,6 +46,7 @@ public class Constants {
 	public static class Order {
 		public static String KEY = "orderKey";
 		public static String ORDER = "order";
+		public static String ACCOUNT = "account";
 	}
 
 	public static class Storage {

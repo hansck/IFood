@@ -14,7 +14,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.tmpb.ifood.R;
 import com.tmpb.ifood.activity.DetailOrderActivity_;
-import com.tmpb.ifood.adapter.MenuAdapter;
 import com.tmpb.ifood.adapter.OrderHistoryAdapter;
 import com.tmpb.ifood.model.object.Order;
 import com.tmpb.ifood.util.Common;
@@ -23,6 +22,7 @@ import com.tmpb.ifood.util.Constants;
 import com.tmpb.ifood.util.FirebaseDB;
 import com.tmpb.ifood.util.ItemDecoration;
 import com.tmpb.ifood.util.OnListItemSelected;
+import com.tmpb.ifood.util.manager.UserManager;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -104,7 +104,8 @@ public class OrderHistoryFragment extends BaseFragment {
 
 	//region Firebase Call
 	@IgnoreWhen(IgnoreWhen.State.VIEW_DESTROYED)
-	void loadCanteen() {
+	void loadOrders() {
+		String email = UserManager.getInstance().getUserEmail();
 		final DatabaseReference ref = FirebaseDB.getInstance().getDbReference(Constants.Order.ORDER);
 		ref.addValueEventListener(new ValueEventListener() {
 			@Override
@@ -134,7 +135,7 @@ public class OrderHistoryFragment extends BaseFragment {
 		public void onRefresh() {
 			swipeRefreshLayout.setRefreshing(true);
 			orders.clear();
-			loadCanteen();
+			loadOrders();
 		}
 	};
 
@@ -146,6 +147,7 @@ public class OrderHistoryFragment extends BaseFragment {
 			bundle.putParcelable(Constants.Order.ORDER, orders.get(position));
 			intent.putExtras(bundle);
 			startActivity(intent);
+			getActivity().overridePendingTransition(R.anim.enter_right, R.anim.exit_left);
 		}
 	};
 	//endregion
