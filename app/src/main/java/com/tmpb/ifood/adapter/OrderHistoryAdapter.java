@@ -19,6 +19,7 @@ import com.tmpb.ifood.util.Common;
 import com.tmpb.ifood.util.OnListItemSelected;
 import com.tmpb.ifood.util.manager.CanteenManager;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,7 +63,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 		final Order order = list.get(position);
 		holder.orderId.setText(order.getOrderId());
 		holder.canteen.setText(CanteenManager.getInstance().getNameById(order.getCanteenKey()));
-		holder.date.setText(Common.getInstance().formatDateFull(order.getDate()));
+		holder.date.setText(Common.getInstance().formatDateFull(new Date(order.getDate())));
 		setStatus(order.getStatus(), holder.status);
 		holder.content.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -84,6 +85,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 				color = ContextCompat.getColor(context, R.color.ic_in_progress);
 				break;
 			case CANCELLED:
+			case REJECTED:
 				color = ContextCompat.getColor(context, R.color.ic_cancel);
 				break;
 			case COMPLETED:

@@ -32,22 +32,22 @@
 		android:background="@color/text_light_4">
 
 		<Button
-			android:id="@+id/btnInProgress"
+			android:id="@+id/btnOrder"
 			style="@style/CustomButton"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
-			android:text="@string/in_progress"
-			android:visibility="gone"/>
+			android:text="@string/order"
+			android:visibility="visible"/>
 
 		<Button
-			android:id="@+id/btnCompleted"
-			style="@style/CustomButton"
+			android:id="@+id/btnCancel"
+			style="@style/CustomButtonRemove"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
-			android:text="@string/completed"
-			android:visibility="visible"/>
+			android:text="@string/cancel"
+			android:visibility="gone"/>
 
 		<ProgressBar
 			android:id="@+id/progressBar"

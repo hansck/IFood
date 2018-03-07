@@ -49,6 +49,7 @@
 	<string name="sign_out">Sign Out</string>
 	<string name="select_source">Select Source</string>
 	<string name="success_add">Item has been added successfully</string>
+	<string name="success_order">Your orders have been successfully booked</string>
 	<string name="success_update">Item has been updated successfully</string>
 	<string name="success_remove">Item has been removed successfully</string>
 	<string name="start_now">Start Now</string>

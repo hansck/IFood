@@ -6,9 +6,9 @@ package com.tmpb.ifood.model.object;
 
 public enum OrderStatus {
 
-	OPEN, CANCELLED, IN_PROGRESS, COMPLETED;
+	OPEN, CANCELLED, IN_PROGRESS, COMPLETED, REJECTED;
 
-	private static String[] title = {"Open", "Cancelled", "In Progress", "Completed"};
+	private static String[] title = {"Open", "Cancelled", "In Progress", "Completed", "Rejected"};
 
 	public static OrderStatus fromInt(int x) {
 		try {
@@ -29,6 +29,8 @@ public enum OrderStatus {
 					return 2;
 				case COMPLETED:
 					return 3;
+				case REJECTED:
+					return 4;
 				default:
 					return -1;
 			}

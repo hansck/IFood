@@ -40,7 +40,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,6 +200,7 @@ public class DetailOrderActivity extends AppCompatActivity {
 				color = ContextCompat.getColor(this, R.color.ic_in_progress);
 				break;
 			case CANCELLED:
+			case REJECTED:
 				color = ContextCompat.getColor(this, R.color.ic_cancel);
 				break;
 			case COMPLETED:
@@ -245,6 +245,14 @@ public class DetailOrderActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 
+	private void goToHome() {
+		Intent intent = new Intent(this, HomeActivity_.class);
+		intent.putExtra("isOrder", true);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		overridePendingTransition(R.anim.enter_right, R.anim.exit_left);
+	}
+
 	private int calculateSubTotal() {
 		int subTotal = 0;
 		if (MenuManager.getInstance().getMenus().size() > 0) {
@@ -264,10 +272,11 @@ public class DetailOrderActivity extends AppCompatActivity {
 	private void uploadContent() {
 		String menuKey = FirebaseDB.getInstance().getKey(Constants.Order.ORDER);
 		Order order = new Order(canteenKey, generateOrderId(), UserManager.getInstance().getUserEmail(), receiver,
-			deliver, notes, new Date(), OrderStatus.toInt(OPEN), items);
+			deliver, notes, System.currentTimeMillis(), OrderStatus.toInt(OPEN), items);
 		FirebaseDB.getInstance().getDbReference(Constants.Order.ORDER).child(menuKey).setValue(order);
 		setLoading(false);
-		Common.getInstance().showAlertToast(this, getString(R.string.success_add));
+		Common.getInstance().showAlertToast(this, getString(R.string.success_order));
+		goToHome();
 	}
 
 	private void loadMenu() {

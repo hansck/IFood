@@ -1,6 +1,7 @@
 package com.tmpb.ifood.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -35,9 +36,6 @@ import org.androidannotations.annotations.WindowFeature;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
 @EActivity(R.layout.activity_home)
 @WindowFeature(Window.FEATURE_NO_TITLE)
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,10 +51,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 	private FragmentManager fm;
 	private ActionBarDrawerToggle toggle;
+	private boolean isOrder;
 
 	@AfterViews
 	void initLayout() {
 		setSupportActionBar(toolbar);
+
+		Bundle data = getIntent().getExtras();
+		if (data != null) {
+			isOrder = data.getBoolean("isOrder", false);
+		}
+
 		toggle = new ActionBarDrawerToggle(this, content, toolbar, R.string.drawer_open, R.string.drawer_close) {
 			public void onDrawerClosed(View v) {
 			}
@@ -94,7 +99,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 			}
 		});
 		setHeaderDrawer();
-		goToCanteen();
+		if (isOrder) {
+			goToOrderHistory();
+		} else {
+			goToCanteen();
+		}
 	}
 
 	public void setHomeChecked() {

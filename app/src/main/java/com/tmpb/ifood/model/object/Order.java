@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ public class Order implements Parcelable {
 	private String receiver;
 	private String deliverTo;
 	private String notes;
-	private Date date;
+	private long date;
 	private int status;
 	private List<OrderItem> items = new ArrayList<>();
 
@@ -28,7 +27,7 @@ public class Order implements Parcelable {
 
 	}
 
-	public Order(String canteenKey, String orderId, String custEmail, String receiver, String deliverTo, String notes, Date date, int status, List<OrderItem> items) {
+	public Order(String canteenKey, String orderId, String custEmail, String receiver, String deliverTo, String notes, long date, int status, List<OrderItem> items) {
 		this.canteenKey = canteenKey;
 		this.orderId = orderId;
 		this.custEmail = custEmail;
@@ -96,11 +95,11 @@ public class Order implements Parcelable {
 		this.notes = notes;
 	}
 
-	public Date getDate() {
+	public long getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(long date) {
 		this.date = date;
 	}
 
@@ -149,6 +148,7 @@ public class Order implements Parcelable {
 		dest.writeString(deliverTo);
 		dest.writeString(notes);
 		dest.writeInt(status);
+		dest.writeLong(date);
 		dest.writeTypedList(items);
 	}
 
@@ -161,6 +161,7 @@ public class Order implements Parcelable {
 		deliverTo = in.readString();
 		notes = in.readString();
 		status = in.readInt();
+		date = in.readLong();
 		items = in.createTypedArrayList(OrderItem.CREATOR);
 	}
 	//endregion

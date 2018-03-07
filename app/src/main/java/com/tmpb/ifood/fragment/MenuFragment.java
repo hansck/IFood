@@ -2,15 +2,10 @@ package com.tmpb.ifood.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,42 +61,17 @@ public class MenuFragment extends BaseFragment {
 	RelativeLayout buttonContainer;
 	@ViewById
 	RecyclerView listMenu;
-	@ViewById
-	Toolbar toolbar;
-	@ViewById
-	AppBarLayout appBarLayout;
-	@ViewById
-	CollapsingToolbarLayout collapsingToolbar;
 
 	@AfterViews
 	void initLayout() {
+		((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.menu));
+		((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		Bundle data = this.getArguments();
 		if (data != null) {
 			canteen = data.getParcelable(Constants.Canteen.CANTEEN);
 			setView();
 		}
-
-		((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-		((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-		((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				getActivity().onBackPressed();
-			}
-		});
-		appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-			@Override
-			public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-				if (verticalOffset <= toolbar.getHeight() - collapsingToolbar.getHeight()) {
-					collapsingToolbar.setContentScrimColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-					collapsingToolbar.setTitle(canteen.getName());
-				} else {
-					collapsingToolbar.setContentScrimColor(ContextCompat.getColor(getActivity(), android.R.color.transparent));
-					collapsingToolbar.setTitle("");
-				}
-			}
-		});
 
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
 		listMenu.setLayoutManager(layoutManager);

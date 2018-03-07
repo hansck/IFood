@@ -21,6 +21,7 @@ import com.tmpb.ifood.util.ConnectivityUtil;
 import com.tmpb.ifood.util.Constants;
 import com.tmpb.ifood.util.FirebaseDB;
 import com.tmpb.ifood.util.ItemDecoration;
+import com.tmpb.ifood.util.ListDivider;
 import com.tmpb.ifood.util.OnListItemSelected;
 import com.tmpb.ifood.util.manager.UserManager;
 
@@ -48,22 +49,16 @@ public class OrderHistoryFragment extends BaseFragment {
 
 	@AfterViews
 	void initLayout() {
-		((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.home));
+		((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.history_order));
 		((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
 		listOrder.setLayoutManager(layoutManager);
-		listOrder.addItemDecoration(new ItemDecoration(1, Common.getInstance().dpToPx(getActivity(), 10), true));
+		listOrder.addItemDecoration(new ListDivider(getActivity(), R.drawable.bg_divider_full));
 		listOrder.setItemAnimator(new DefaultItemAnimator());
 
 		adapter = new OrderHistoryAdapter(getActivity(), orders, orderListener);
 		listOrder.setAdapter(adapter);
-
-		if (ConnectivityUtil.getInstance().isNetworkConnected()) {
-			swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
-			swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-			onRefreshListener.onRefresh();
-		}
 	}
 
 	@Override
@@ -79,8 +74,11 @@ public class OrderHistoryFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
-		swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+		if (ConnectivityUtil.getInstance().isNetworkConnected()) {
+			swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+			swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+			onRefreshListener.onRefresh();
+		}
 	}
 
 	@IgnoreWhen(IgnoreWhen.State.VIEW_DESTROYED)
@@ -105,17 +103,20 @@ public class OrderHistoryFragment extends BaseFragment {
 	//region Firebase Call
 	@IgnoreWhen(IgnoreWhen.State.VIEW_DESTROYED)
 	void loadOrders() {
+		orders.clear();
 		String email = UserManager.getInstance().getUserEmail();
 		final DatabaseReference ref = FirebaseDB.getInstance().getDbReference(Constants.Order.ORDER);
 		ref.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
-				for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-					Order order = postSnapshot.getValue(Order.class);
-					order.setKey(postSnapshot.getKey());
-					orders.add(order);
+				if (dataSnapshot != null) {
+					for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+						Order order = postSnapshot.getValue(Order.class);
+						order.setKey(postSnapshot.getKey());
+						orders.add(order);
+					}
+					setCanteenList();
 				}
-				setCanteenList();
 				ref.removeEventListener(this);
 			}
 
