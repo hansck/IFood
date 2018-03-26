@@ -14,13 +14,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.tmpb.ifood.R;
 import com.tmpb.ifood.activity.DetailOrderActivity_;
+import com.tmpb.ifood.activity.HomeActivity_;
 import com.tmpb.ifood.adapter.OrderHistoryAdapter;
 import com.tmpb.ifood.model.object.Order;
 import com.tmpb.ifood.util.Common;
 import com.tmpb.ifood.util.ConnectivityUtil;
 import com.tmpb.ifood.util.Constants;
 import com.tmpb.ifood.util.FirebaseDB;
-import com.tmpb.ifood.util.ItemDecoration;
 import com.tmpb.ifood.util.ListDivider;
 import com.tmpb.ifood.util.OnListItemSelected;
 import com.tmpb.ifood.util.manager.UserManager;
@@ -31,6 +31,9 @@ import org.androidannotations.annotations.IgnoreWhen;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import static android.view.View.GONE;
@@ -74,6 +77,7 @@ public class OrderHistoryFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		((HomeActivity_) getActivity()).setOrderHistoryChecked();
 		if (ConnectivityUtil.getInstance().isNetworkConnected()) {
 			swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
 			swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
@@ -88,7 +92,7 @@ public class OrderHistoryFragment extends BaseFragment {
 		}
 	}
 
-	private void setCanteenList() {
+	private void setOrderList() {
 		if (listOrder != null) {
 			if (orders != null && orders.size() > 0) {
 				adapter.notifyDataSetChanged();
@@ -100,31 +104,39 @@ public class OrderHistoryFragment extends BaseFragment {
 		cancelRefresh();
 	}
 
+	private void sortOrders() {
+		Collections.sort(orders, new Comparator<Order>() {
+			@Override
+			public int compare(Order o1, Order o2) {
+				return new Date(o2.getDate()).compareTo(new Date(o1.getDate()));
+			}
+		});
+	}
+
 	//region Firebase Call
 	@IgnoreWhen(IgnoreWhen.State.VIEW_DESTROYED)
 	void loadOrders() {
-		orders.clear();
 		String email = UserManager.getInstance().getUserEmail();
 		final DatabaseReference ref = FirebaseDB.getInstance().getDbReference(Constants.Order.ORDER);
-		ref.addValueEventListener(new ValueEventListener() {
+		ref.orderByChild("custEmail").equalTo(email).addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
+				orders.clear();
 				if (dataSnapshot != null) {
 					for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 						Order order = postSnapshot.getValue(Order.class);
 						order.setKey(postSnapshot.getKey());
 						orders.add(order);
 					}
-					setCanteenList();
+					sortOrders();
+					setOrderList();
 				}
-				ref.removeEventListener(this);
 			}
 
 			@Override
 			public void onCancelled(DatabaseError error) {
 				if (isAdded()) Common.getInstance().showAlertToast(getActivity(), getString(R.string.default_failed));
 				cancelRefresh();
-				ref.removeEventListener(this);
 			}
 		});
 	}

@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -131,7 +133,6 @@ public class Order implements Parcelable {
 			return new Order[size];
 		}
 	};
-
 
 	@Override
 	public int describeContents() {

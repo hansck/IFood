@@ -13,7 +13,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.tmpb.ifood.R;
-import com.tmpb.ifood.model.object.User;
 import com.tmpb.ifood.util.Constants;
 
 /**
@@ -41,9 +40,10 @@ public class UserManager implements GoogleApiClient.OnConnectionFailedListener {
 
 		if (googleApiClient == null) {
 			googleApiClient = new GoogleApiClient.Builder(activity)
-				.enableAutoManage(activity, this)
 				.addApi(Auth.GOOGLE_SIGN_IN_API, gso)
 				.build();
+		} else {
+			googleApiClient.connect();
 		}
 		auth = FirebaseAuth.getInstance();
 	}

@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 	@AfterViews
 	void initLayout() {
 		setSupportActionBar(toolbar);
-
+		UserManager.getInstance().initAuth(this);
 		Bundle data = getIntent().getExtras();
 		if (data != null) {
 			isOrder = data.getBoolean("isOrder", false);
@@ -74,13 +74,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 		toggle.syncState();
 		navigationView.setNavigationItemSelectedListener(this);
 		navigationView.setItemIconTintList(null);
-//		if (UserManager.getInstance().getFirebaseUser() != null) {
-//			navigationView.getMenu().setGroupVisible(R.id.nav_signin, true);
-////			profileImage.setVisibility(GONE);
-//		} else {
-//			navigationView.getMenu().setGroupVisible(R.id.nav_signout, true);
-////			profileImage.setVisibility(VISIBLE);
-//		}
 		setHomeChecked();
 
 		fm = getSupportFragmentManager();
@@ -108,6 +101,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 	public void setHomeChecked() {
 		navigationView.getMenu().getItem(0).setChecked(true);
+	}
+
+	public void setOrderHistoryChecked() {
+		navigationView.getMenu().getItem(1).setChecked(true);
 	}
 
 	private void setHeaderDrawer() {
@@ -140,7 +137,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.findItem(R.id.nav_home).setVisible(false);
 		menu.findItem(R.id.nav_order_history).setVisible(false);
-		menu.findItem(R.id.nav_signin).setVisible(false);
 		menu.findItem(R.id.nav_signout).setVisible(false);
 		return true;
 	}
@@ -167,9 +163,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 				break;
 			case R.id.nav_order_history:
 				goToOrderHistory();
-				break;
-			case R.id.nav_signin:
-				goToLogin();
 				break;
 			case R.id.nav_signout:
 				onSignOut();

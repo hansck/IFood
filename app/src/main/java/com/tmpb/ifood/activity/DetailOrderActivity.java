@@ -113,20 +113,13 @@ public class DetailOrderActivity extends AppCompatActivity {
 
 	@Click(R.id.btnOrder)
 	void onAdd() {
-		if (UserManager.getInstance().getFirebaseUser() != null) {
-			if (getData()) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage(getString(R.string.dialog_add))
-					.setPositiveButton(getString(R.string.yes), addNewsListener)
-					.setNegativeButton(getString(R.string.no), addNewsListener).show();
-			} else {
-				Common.getInstance().showAlertToast(this, getString(R.string.field_empty));
-			}
-		} else {
+		if (getData()) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(getString(R.string.dialog_login))
-				.setPositiveButton(getString(R.string.dialog_continue), loginListener)
-				.setNegativeButton(getString(R.string.cancel), loginListener).show();
+			builder.setMessage(getString(R.string.dialog_add))
+				.setPositiveButton(getString(R.string.yes), addNewsListener)
+				.setNegativeButton(getString(R.string.no), addNewsListener).show();
+		} else {
+			Common.getInstance().showAlertToast(this, getString(R.string.field_empty));
 		}
 	}
 
@@ -313,20 +306,6 @@ public class DetailOrderActivity extends AppCompatActivity {
 				case DialogInterface.BUTTON_POSITIVE:
 					setLoading(true);
 					uploadContent();
-					break;
-				case DialogInterface.BUTTON_NEGATIVE:
-					break;
-			}
-		}
-	};
-
-	DialogInterface.OnClickListener loginListener = new DialogInterface.OnClickListener() {
-		@Override
-		public void onClick(DialogInterface dialog, int choice) {
-			switch (choice) {
-				case DialogInterface.BUTTON_POSITIVE:
-					setLoading(true);
-					goToLogin();
 					break;
 				case DialogInterface.BUTTON_NEGATIVE:
 					break;
