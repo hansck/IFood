@@ -1,11 +1,9 @@
-package com.tmpb.ifood.model.object;
+package com.tmpb.ifood.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**

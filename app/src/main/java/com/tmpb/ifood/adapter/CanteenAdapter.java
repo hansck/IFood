@@ -10,12 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tmpb.ifood.R;
-import com.tmpb.ifood.model.object.Canteen;
-import com.tmpb.ifood.util.Constants;
+import com.tmpb.ifood.model.Canteen;
 import com.tmpb.ifood.util.ImageUtil;
 import com.tmpb.ifood.util.OnListItemSelected;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**

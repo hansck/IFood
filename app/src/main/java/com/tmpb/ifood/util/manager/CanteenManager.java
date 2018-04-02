@@ -1,6 +1,6 @@
 package com.tmpb.ifood.util.manager;
 
-import com.tmpb.ifood.model.object.Canteen;
+import com.tmpb.ifood.model.Canteen;
 
 import java.util.ArrayList;
 import java.util.List;

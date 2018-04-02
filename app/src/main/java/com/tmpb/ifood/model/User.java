@@ -1,4 +1,4 @@
-package com.tmpb.ifood.model.object;
+package com.tmpb.ifood.model;
 
 import java.util.Comparator;
 

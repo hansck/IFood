@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.tmpb.ifood.R;
 import com.tmpb.ifood.activity.DetailOrderActivity;
-import com.tmpb.ifood.model.object.Menu;
-import com.tmpb.ifood.model.object.OrderItem;
+import com.tmpb.ifood.model.Menu;
+import com.tmpb.ifood.model.OrderItem;
 import com.tmpb.ifood.util.Common;
 import com.tmpb.ifood.util.ImageUtil;
 import com.tmpb.ifood.util.manager.MenuManager;

@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tmpb.ifood.R;
-import com.tmpb.ifood.model.object.Order;
-import com.tmpb.ifood.model.object.OrderStatus;
+import com.tmpb.ifood.model.Order;
+import com.tmpb.ifood.model.OrderStatus;
 import com.tmpb.ifood.util.Common;
 import com.tmpb.ifood.util.OnListItemSelected;
 import com.tmpb.ifood.util.manager.CanteenManager;

@@ -22,10 +22,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.tmpb.ifood.R;
 import com.tmpb.ifood.adapter.OrderItemsAdapter;
-import com.tmpb.ifood.model.object.Menu;
-import com.tmpb.ifood.model.object.Order;
-import com.tmpb.ifood.model.object.OrderItem;
-import com.tmpb.ifood.model.object.OrderStatus;
+import com.tmpb.ifood.model.Menu;
+import com.tmpb.ifood.model.Order;
+import com.tmpb.ifood.model.OrderItem;
+import com.tmpb.ifood.model.OrderStatus;
 import com.tmpb.ifood.util.Common;
 import com.tmpb.ifood.util.Constants;
 import com.tmpb.ifood.util.FirebaseDB;
@@ -47,8 +47,8 @@ import java.util.Random;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.tmpb.ifood.model.object.OrderStatus.CANCELLED;
-import static com.tmpb.ifood.model.object.OrderStatus.OPEN;
+import static com.tmpb.ifood.model.OrderStatus.CANCELLED;
+import static com.tmpb.ifood.model.OrderStatus.OPEN;
 
 /**
  * Created by Hans CK on 19-Feb-18.

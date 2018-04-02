@@ -1,4 +1,4 @@
-package com.tmpb.ifood.model.object;
+package com.tmpb.ifood.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,4 +1,4 @@
-package com.tmpb.ifood.model.object;
+package com.tmpb.ifood.model;
 
 /**
  * Created by Hans CK on 19-Feb-18.

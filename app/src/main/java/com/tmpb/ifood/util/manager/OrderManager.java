@@ -1,6 +1,6 @@
 package com.tmpb.ifood.util.manager;
 
-import com.tmpb.ifood.model.object.OrderItem;
+import com.tmpb.ifood.model.OrderItem;
 
 import java.util.ArrayList;
 import java.util.List;

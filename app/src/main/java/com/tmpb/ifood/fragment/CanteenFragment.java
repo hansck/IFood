@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.tmpb.ifood.R;
 import com.tmpb.ifood.adapter.CanteenAdapter;
-import com.tmpb.ifood.model.object.Canteen;
+import com.tmpb.ifood.model.Canteen;
 import com.tmpb.ifood.util.Common;
 import com.tmpb.ifood.util.ConnectivityUtil;
 import com.tmpb.ifood.util.Constants;

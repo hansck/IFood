@@ -16,7 +16,7 @@ import com.tmpb.ifood.R;
 import com.tmpb.ifood.activity.DetailOrderActivity_;
 import com.tmpb.ifood.activity.HomeActivity_;
 import com.tmpb.ifood.adapter.OrderHistoryAdapter;
-import com.tmpb.ifood.model.object.Order;
+import com.tmpb.ifood.model.Order;
 import com.tmpb.ifood.util.Common;
 import com.tmpb.ifood.util.ConnectivityUtil;
 import com.tmpb.ifood.util.Constants;
