@@ -40,19 +40,33 @@
 					style="@style/SubheadingMedium"
 					tools:text="Kantin Borju"/>
 
-				<TextView
-					android:id="@+id/location"
-					style="@style/BodyRegular"
-					android:layout_marginTop="@dimen/item_margin_small"
-					android:ellipsize="end"
-					android:maxLines="2"
-					tools:text="Gedung Labtek V, Lt.1"/>
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:weightSum="1">
 
-				<TextView
-					android:id="@+id/schedule"
-					style="@style/BodyRegular"
-					android:layout_marginTop="@dimen/item_margin_mini"
-					tools:text="10.00 - 18.00"/>
+					<TextView
+						android:id="@+id/location"
+						style="@style/BodyRegular"
+						android:layout_width="0dp"
+						android:layout_marginTop="@dimen/item_margin_small"
+						android:layout_weight="0.6"
+						android:ellipsize="end"
+						android:maxLines="2"
+						tools:text="Gedung Labtek V, Lt.1"/>
+
+					<TextView
+						android:id="@+id/schedule"
+						style="@style/BodyRegular"
+						android:layout_width="0dp"
+						android:layout_marginTop="@dimen/item_margin_mini"
+						android:layout_weight="0.4"
+						android:drawableLeft="@drawable/ic_clock"
+						android:drawablePadding="@dimen/item_margin_small"
+						android:drawableStart="@drawable/ic_clock"
+						android:gravity="center_vertical"
+						tools:text="10.00 - 18.00"/>
+				</LinearLayout>
 			</LinearLayout>
 		</RelativeLayout>
 	</android.support.v7.widget.CardView>

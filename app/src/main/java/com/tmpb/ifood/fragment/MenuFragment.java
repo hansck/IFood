@@ -143,19 +143,18 @@ public class MenuFragment extends BaseFragment {
 		ref.orderByChild(Constants.Menu.CANTEEN_KEY).equalTo(canteen.getKey()).addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
+				menus.clear();
 				for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 					Menu menu = postSnapshot.getValue(Menu.class);
 					menu.setKey(postSnapshot.getKey());
 					menus.add(menu);
 				}
 				setMenuList();
-				ref.removeEventListener(this);
 			}
 
 			@Override
 			public void onCancelled(DatabaseError error) {
 				if (isAdded()) Common.getInstance().showAlertToast(getActivity(), getString(R.string.default_failed));
-				ref.removeEventListener(this);
 			}
 		});
 	}

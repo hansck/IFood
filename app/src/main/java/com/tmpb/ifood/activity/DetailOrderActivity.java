@@ -116,8 +116,8 @@ public class DetailOrderActivity extends AppCompatActivity {
 		if (getData()) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(getString(R.string.dialog_add))
-				.setPositiveButton(getString(R.string.yes), addNewsListener)
-				.setNegativeButton(getString(R.string.no), addNewsListener).show();
+				.setPositiveButton(getString(R.string.yes), uploadDialog)
+				.setNegativeButton(getString(R.string.no), uploadDialog).show();
 		} else {
 			Common.getInstance().showAlertToast(this, getString(R.string.field_empty));
 		}
@@ -125,13 +125,10 @@ public class DetailOrderActivity extends AppCompatActivity {
 
 	@Click(R.id.btnCancel)
 	void onCancel() {
-		setLoading(true);
-		DatabaseReference ref = FirebaseDB.getInstance().getDbReference(Constants.Order.ORDER);
-		Map<String, Object> taskMap = new HashMap<>();
-		taskMap.put("status", OrderStatus.toInt(CANCELLED));
-		ref.child(order.getKey()).updateChildren(taskMap);
-		setLoading(false);
-		setStatus(OrderStatus.CANCELLED);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(getString(R.string.dialog_cancel))
+			.setPositiveButton(getString(R.string.yes), cancelDialog)
+			.setNegativeButton(getString(R.string.no), cancelDialog).show();
 	}
 
 	@Override
@@ -233,11 +230,6 @@ public class DetailOrderActivity extends AppCompatActivity {
 		return key.toString();
 	}
 
-	private void goToLogin() {
-		Intent intent = new Intent(this, LoginActivity_.class);
-		startActivity(intent);
-	}
-
 	private void goToHome() {
 		Intent intent = new Intent(this, HomeActivity_.class);
 		intent.putExtra("isOrder", true);
@@ -272,6 +264,16 @@ public class DetailOrderActivity extends AppCompatActivity {
 		goToHome();
 	}
 
+	private void cancelOrder() {
+		setLoading(true);
+		DatabaseReference ref = FirebaseDB.getInstance().getDbReference(Constants.Order.ORDER);
+		Map<String, Object> taskMap = new HashMap<>();
+		taskMap.put("status", OrderStatus.toInt(CANCELLED));
+		ref.child(order.getKey()).updateChildren(taskMap);
+		setLoading(false);
+		setStatus(OrderStatus.CANCELLED);
+	}
+
 	private void loadMenu() {
 		final DatabaseReference ref = FirebaseDB.getInstance().getDbReference(Constants.Menu.MENU);
 		ref.orderByChild(Constants.Menu.CANTEEN_KEY).equalTo(order.getCanteenKey()).addValueEventListener(new ValueEventListener() {
@@ -299,13 +301,27 @@ public class DetailOrderActivity extends AppCompatActivity {
 	//endregion
 
 	//region Listeners
-	DialogInterface.OnClickListener addNewsListener = new DialogInterface.OnClickListener() {
+	DialogInterface.OnClickListener uploadDialog = new DialogInterface.OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int choice) {
 			switch (choice) {
 				case DialogInterface.BUTTON_POSITIVE:
 					setLoading(true);
 					uploadContent();
+					break;
+				case DialogInterface.BUTTON_NEGATIVE:
+					break;
+			}
+		}
+	};
+
+	DialogInterface.OnClickListener cancelDialog = new DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int choice) {
+			switch (choice) {
+				case DialogInterface.BUTTON_POSITIVE:
+					setLoading(true);
+					cancelOrder();
 					break;
 				case DialogInterface.BUTTON_NEGATIVE:
 					break;

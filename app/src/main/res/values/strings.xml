@@ -11,6 +11,7 @@
 	<string name="deliver_to">Deliver To</string>
 	<string name="delivery_fee">Delivery Fee</string>
 	<string name="dialog_add">Are you sure you want to add this item?</string>
+	<string name="dialog_cancel">Are you sure you want to cancel this order?</string>
 	<string name="dialog_continue">Continue</string>
 	<string name="dialog_login">Please sign in to your Google Account to continue order.</string>
 	<string name="dialog_update">Are you sure you want to update this item?</string>

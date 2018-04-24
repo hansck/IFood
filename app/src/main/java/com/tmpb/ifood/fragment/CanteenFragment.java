@@ -107,20 +107,19 @@ public class CanteenFragment extends BaseFragment {
 		ref.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
+				canteens.clear();
 				for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 					Canteen canteen = postSnapshot.getValue(Canteen.class);
 					canteen.setKey(postSnapshot.getKey());
 					canteens.add(canteen);
 				}
 				setCanteenList();
-				ref.removeEventListener(this);
 			}
 
 			@Override
 			public void onCancelled(DatabaseError error) {
 				if (isAdded()) Common.getInstance().showAlertToast(getActivity(), getString(R.string.default_failed));
 				cancelRefresh();
-				ref.removeEventListener(this);
 			}
 		});
 	}
